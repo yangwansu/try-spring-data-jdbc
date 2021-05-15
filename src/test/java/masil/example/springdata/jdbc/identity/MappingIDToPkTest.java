@@ -1,4 +1,4 @@
-package masil.example.springdata.jdbc;
+package masil.example.springdata.jdbc.identity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -95,7 +95,6 @@ public class MappingIDToPkTest {
 
     @ReadingConverter
     public static class LongToTestEntityIdConvertor implements Converter<Long, TestEntityId> {
-
         @Override
         public TestEntityId convert(Long source) {
             return TestEntityId.of(source);

@@ -1,4 +1,4 @@
-package masil.example.springdata.jdbc;
+package masil.example.springdata.jdbc.identity;
 
 import lombok.Getter;
 import lombok.Value;
