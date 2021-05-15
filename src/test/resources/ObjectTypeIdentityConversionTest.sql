@@ -1,0 +1,1 @@
+CREATE TABLE IF NOT EXISTS TEST_ENTITY (id INTEGER IDENTITY PRIMARY KEY , name varchar(100), score INTEGER , createdAt bigint)

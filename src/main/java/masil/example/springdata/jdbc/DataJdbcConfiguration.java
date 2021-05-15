@@ -31,5 +31,4 @@ public class DataJdbcConfiguration extends AbstractJdbcConfiguration {
     TransactionManager transactionManager(DataSource dataSource) {
         return new DataSourceTransactionManager(dataSource);
     }
-
 }
