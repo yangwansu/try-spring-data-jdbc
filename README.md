@@ -13,6 +13,7 @@
     - [Mapping Object ID to PK](src/test/java/masil/example/springdata/jdbc/MappingIDToPkTest.java)
     - [Mapping Composite Identity to PK](src/test/java/masil/example/springdata/jdbc/MappingCompositeIDToPKTest.java)
     - [Mapping Composite Identity to Composite Keys]()
+    - [Mapping Composite Identity With Surrogate Keys]()
 
 
 
