@@ -17,7 +17,6 @@ import org.springframework.data.convert.WritingConverter;
 import org.springframework.data.jdbc.core.JdbcAggregateOperations;
 import org.springframework.data.jdbc.core.convert.JdbcCustomConversions;
 import org.springframework.data.jdbc.repository.config.AbstractJdbcConfiguration;
-import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -33,15 +32,15 @@ import java.util.Arrays;
 import static lombok.AccessLevel.PRIVATE;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringJUnitConfig(classes = ObjectTypeIdentityConversionTest.Config.class)
-public class ObjectTypeIdentityConversionTest {
+@SpringJUnitConfig(classes = MappingObjectTypeTest.Config.class)
+public class MappingObjectTypeTest {
 
     @Configuration
     public static class Config extends AbstractJdbcConfiguration {
 
         @Bean
         DataSource dataSource() {
-            return new EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.HSQL).addScript("ObjectTypeIdentityConversionTest.sql").build();
+            return new EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.HSQL).addScript("MappingObjectTypeTest.sql").build();
         }
         @Bean
         NamedParameterJdbcOperations jdbcOperations(DataSource dataSource) {
@@ -64,7 +63,7 @@ public class ObjectTypeIdentityConversionTest {
     JdbcAggregateOperations aggregateOperations;
 
     @Getter
-    @Table
+    @Table("TEST_TABLE")
     @AllArgsConstructor(access = PRIVATE, onConstructor_=@PersistenceConstructor)
     @RequiredArgsConstructor(staticName = "of")
     public static class TestEntity {
@@ -76,12 +75,10 @@ public class ObjectTypeIdentityConversionTest {
 
     @Value(staticConstructor = "of")
     public static class TestEntityId {
-        @Column("ID")
         OtherAggregationRef value;
     }
     @Value(staticConstructor = "of")
     public static class OtherAggregationRef {
-        @Column("ID")
         Integer id;
     }
 
@@ -105,8 +102,8 @@ public class ObjectTypeIdentityConversionTest {
 
 
     @Test
-    @DisplayName("In Object Type Identity, It uses the Custom Convertor")
-    void usingConvert() {
+    @DisplayName("Object Type ID Mapping ")
+    void objectTypeId() {
 
         TestEntity saved = aggregateOperations.save(TestEntity.of("xxx"));
 

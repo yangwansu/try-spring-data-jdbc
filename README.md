@@ -1,3 +1,20 @@
+# Let's Try Test to Spring Data JDBC 
+
+
+- [Object Type Mapping](src/test/java/masil/example/springdata/jdbc/MappingObjectTypeTest.java)
+- [Mapping Composite Identity to PK](src/test/java/masil/example/springdata/jdbc/MappingCompositeIDToPKTest.java)
+
+
+## Identity
+
+- Generate in a db
+    - [Object Type Mapping](src/test/java/masil/example/springdata/jdbc/MappingObjectTypeTest.java)
+- Generate in a Client
+    - [Mapping Object ID to PK](src/test/java/masil/example/springdata/jdbc/MappingIDToPkTest.java)
+    - [Mapping Composite Identity to PK](src/test/java/masil/example/springdata/jdbc/MappingCompositeIDToPKTest.java)
+    - [Mapping Composite Identity to Composite Keys]()
+
+
 
 ## Dependencies 
 implementation 'org.springframework.data:spring-data-jdbc:2.2.0'
