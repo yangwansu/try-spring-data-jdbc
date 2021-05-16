@@ -1,6 +1,6 @@
 # 관계 맵핑
 
-[공식 문서](https://docs.spring.io/spring-data/jdbc/docs/current/reference/html/#jdbc.entity-persistence.types)
+[관련 공식 문서](https://docs.spring.io/spring-data/jdbc/docs/current/reference/html/#jdbc.entity-persistence.types)
 
 ### SQL Schema
 
@@ -227,7 +227,8 @@ void oneToMany_list_test() {
 }
 
 ```
-## 왜 ManyToOne 은 없는 걸까?
+## 왜 Spring data JDBC ManyToOne 은 없는 걸까?
+// TODO
 ...
 
 [처음으로 돌아가기](../README.md)

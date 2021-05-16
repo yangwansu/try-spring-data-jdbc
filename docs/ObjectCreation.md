@@ -1,6 +1,6 @@
 # Object Creation
 
-[docs](https://docs.spring.io/spring-data/jdbc/docs/current/reference/html/#mapping.object-creation)
+[관련 공식문서](https://docs.spring.io/spring-data/jdbc/docs/current/reference/html/#mapping.object-creation)
 
 <details><summary>If there’s a no-argument constructor, it will be used. Other constructors will be ignored</summary>
 <p>
