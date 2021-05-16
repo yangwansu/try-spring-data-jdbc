@@ -51,6 +51,8 @@ no-argument 생성자가 있을 경우, 다른 생성자는 무시되어 no-argu
 </p>
 </details>
 
+<br>
+
 <details><summary>If there’s a single constructor taking arguments, it will be used.</summary>
 <p>
 
@@ -87,6 +89,8 @@ void object_creation_resolution_algorithm_2() {
 
 </p>
 </details>
+
+<br>
 
 <details><summary>If there are multiple constructors taking arguments, the one to be used by Spring Data will have to be annotated with `@PersistenceConstructor`.</summary>
 #### Code
@@ -136,6 +140,8 @@ void object_creation_resolution_algorithm_4() {
 </p>
 
 </details>
+
+<br>
 
 <details><summary>Recommend</summary>
 <p>
@@ -201,7 +207,7 @@ testImplementation 'org.springframework:spring-test:5.3.6'
 
 ## configuration
 
-​```java
+```java
 
 @SpringJUnitConfig(classes = DataJdbcConfiguration.class)
 class DataJdbcConfigurationTest {
@@ -209,7 +215,7 @@ class DataJdbcConfigurationTest {
 
     @Autowired
     ApplicationContext ctx;
-
+    
     @Test
     void untitle() {
         Assertions.assertThat(ctx).isNotNull();
@@ -217,7 +223,7 @@ class DataJdbcConfigurationTest {
 }
 ```
 
-```java
+​```java
 
 @Configuration
 public class DataJdbcConfiguration extends AbstractJdbcConfiguration {
