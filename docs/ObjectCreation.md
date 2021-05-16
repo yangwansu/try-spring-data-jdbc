@@ -2,8 +2,7 @@
 
 [관련 공식문서](https://docs.spring.io/spring-data/jdbc/docs/current/reference/html/#mapping.object-creation)
 
-<details><summary>If there’s a no-argument constructor, it will be used. Other constructors will be ignored</summary>
-<p>
+### If there’s a no-argument constructor, it will be used. Other constructors will be ignored
 
 #### Code
 ```java
@@ -41,13 +40,8 @@ void object_creation_resolution_algorithm_1() {
 ```
 no-argument 생성자가 있을 경우, 다른 생성자는 무시되어 no-argument 생성자를 사용한다.
 
-</p>
-</details>
 
-<br>
-
-<details><summary>If there’s a single constructor taking arguments, it will be used.</summary>
-<p>
+### If there’s a single constructor taking arguments, it will be used.
 
 #### Code
 ```java
@@ -80,13 +74,8 @@ void object_creation_resolution_algorithm_2() {
 ```
 단일 생성자가 있을 경우, 단일 생성자를 사용한다.
 
-</p>
-</details>
 
-<br>
-
-<details><summary>If there are multiple constructors taking arguments, the one to be used by Spring Data will have to be annotated with `@PersistenceConstructor`.</summary>
-<p>
+### If there are multiple constructors taking arguments, the one to be used by Spring Data will have to be annotated with `@PersistenceConstructor`.
 
 #### Code
 
@@ -132,14 +121,7 @@ void object_creation_resolution_algorithm_4() {
 ```
 @PersistenceConstructor 애노테이션이 붙은 생성자가 있을 경우, 해당 생성자를 사용한다.
 
-</p>
-
-</details>
-
-<br>
-
-<details><summary>Recommend Object Creation</summary>
-<p>
+#### Recommend Object Creation
 
 #### Code
 
@@ -164,8 +146,5 @@ public static class TestObject6 {
   }
 }
 ```
-
-</p>
-</details>
 
 [처음으로 돌아가기](../README.md)
