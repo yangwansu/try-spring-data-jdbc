@@ -52,7 +52,7 @@ public class MappingCompositeIDToPKTest {
         @Bean
         @Override
         public JdbcCustomConversions jdbcCustomConversions() {
-            return new JdbcCustomConversions(Arrays.asList(StringToCompositeKey.INSTANCE, CompositeKeyToString.INSTANCE));
+            return new JdbcCustomConversions(Arrays.asList(StringToTestEntityId.INSTANCE, TestEntityIdToString.INSTANCE));
         }
     }
 
@@ -61,14 +61,14 @@ public class MappingCompositeIDToPKTest {
 
     @Getter
     @Table("TEST_TABLE1")
-    public static class TestEntity implements Persistable<CompositeKey> {
+    public static class TestEntity implements Persistable<TestEntityId> {
 
-        public static TestEntity of(CompositeKey id, String name) {
+        public static TestEntity of(TestEntityId id, String name) {
             return new TestEntity(id, name, true);
         }
 
         @Id
-        final CompositeKey id;
+        final TestEntityId id;
 
         final String name;
 
@@ -77,11 +77,11 @@ public class MappingCompositeIDToPKTest {
         final Boolean isNew;
 
         @PersistenceConstructor
-        private  TestEntity(CompositeKey id, String name) {
+        private  TestEntity(TestEntityId id, String name) {
             this(id, name, false); //for read from db
         }
 
-        private TestEntity(CompositeKey id, String name, Boolean isNew) {
+        private TestEntity(TestEntityId id, String name, Boolean isNew) {
             this.id = id;
             this.name = name;
             this.isNew = isNew;
@@ -95,26 +95,26 @@ public class MappingCompositeIDToPKTest {
 
 
     @Value(staticConstructor = "of")
-    public static class CompositeKey {
+    public static class TestEntityId {
         Long key1;
         String key2;
     }
 
     @ReadingConverter
-    enum StringToCompositeKey implements Converter<String, CompositeKey> {
+    enum StringToTestEntityId implements Converter<String, TestEntityId> {
         INSTANCE;
         @Override
-        public CompositeKey convert(String source) {
+        public TestEntityId convert(String source) {
             String[] split = source.split("::");
-            return CompositeKey.of(Long.parseLong(split[0]), split[1]);
+            return TestEntityId.of(Long.parseLong(split[0]), split[1]);
         }
     }
 
     @WritingConverter
-    enum CompositeKeyToString implements Converter<CompositeKey, String>{
+    enum TestEntityIdToString implements Converter<TestEntityId, String>{
         INSTANCE;
         @Override
-        public String convert(CompositeKey source) {
+        public String convert(TestEntityId source) {
             return source.key1+"::"+source.getKey2();
         }
     }
@@ -122,7 +122,7 @@ public class MappingCompositeIDToPKTest {
     @Test
     @DisplayName("Mapping Composite Identity to a PK")
     void map_to_pk() {
-        TestEntity entity = TestEntity.of(CompositeKey.of(1L,"Wansu"), "foo");
+        TestEntity entity = TestEntity.of(TestEntityId.of(1L,"Wansu"), "foo");
         jdbcAggregateOperations.save(entity);
 
         assert entity.getId() != null;
