@@ -1,10 +1,14 @@
 package masil.example.springdata.jdbc.relations;
 
+import static org.assertj.core.api.Assertions.*;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Value;
 import masil.example.springdata.jdbc.DataJdbcConfiguration;
+
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Id;
@@ -16,8 +20,6 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 @SpringJUnitConfig(classes = DataJdbcConfiguration.class)
 public class OneToOneTest {
-
-
 
     @Autowired
     JdbcAggregateOperations operations;
@@ -53,9 +55,13 @@ public class OneToOneTest {
     @Test
     void name() {
         Project product = Project.of("macbook", Category.of("notebook"));
-        Project project = operations.save(product);
+        Project saved = operations.save(product);
+        assertThat(saved.getName()).isSameAs(product.getName());
+        assertThat(saved.getCategory()).isSameAs(product.getCategory());
 
-        System.out.println(operations.findById(project.getId(), Project.class));
+        Project found = operations.findById(saved.getId(), Project.class);
+        assert found != null;
+        assertThat(found.getId()).isNotNull();
 
     }
 
