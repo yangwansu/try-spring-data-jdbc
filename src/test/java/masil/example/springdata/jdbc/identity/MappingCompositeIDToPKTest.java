@@ -1,8 +1,12 @@
 package masil.example.springdata.jdbc.identity;
 
+import static org.assertj.core.api.Assertions.*;
+
 import lombok.Getter;
 import lombok.Value;
 import lombok.With;
+
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -129,5 +133,6 @@ public class MappingCompositeIDToPKTest {
 
         TestEntity find = jdbcAggregateOperations.findById(entity.getId(), TestEntity.class);
 
+        assertThat(entity.getId()).isEqualTo(find.getId());
     }
 }
