@@ -22,7 +22,7 @@ import java.util.Set;
 import static org.springframework.test.annotation.DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD;
 
 @DirtiesContext(classMode = AFTER_EACH_TEST_METHOD)
-@SpringJUnitConfig(classes = OneToManyTest.Config.class)
+@SpringJUnitConfig
 public class OneToManyTest {
 
     public static class Config extends AbstractBaseJdbcTestConfig {

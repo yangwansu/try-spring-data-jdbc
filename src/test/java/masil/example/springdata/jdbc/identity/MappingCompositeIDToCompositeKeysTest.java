@@ -15,7 +15,7 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import static org.springframework.test.annotation.DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD;
 
 @DirtiesContext(classMode = AFTER_EACH_TEST_METHOD)
-@SpringJUnitConfig(MappingCompositeIDToCompositeKeysTest.Config.class)
+@SpringJUnitConfig
 public class MappingCompositeIDToCompositeKeysTest {
 
     @Configuration

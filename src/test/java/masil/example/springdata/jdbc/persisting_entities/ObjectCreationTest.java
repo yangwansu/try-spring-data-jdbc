@@ -21,7 +21,7 @@ import static org.springframework.test.annotation.DirtiesContext.ClassMode.AFTER
 
 @DisplayName("Object Mapping")
 @DirtiesContext(classMode = AFTER_EACH_TEST_METHOD)
-@SpringJUnitConfig(classes = ObjectCreationTest.Config.class)
+@SpringJUnitConfig
 public class ObjectCreationTest {
 
     public static class Config extends AbstractBaseJdbcTestConfig {

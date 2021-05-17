@@ -24,7 +24,7 @@ import static org.springframework.test.annotation.DirtiesContext.ClassMode.AFTER
 
 @DirtiesContext(classMode = AFTER_EACH_TEST_METHOD)
 @Transactional
-@SpringJUnitConfig(classes = FooRepositoryTest.Config.class)
+@SpringJUnitConfig
 public class FooRepositoryTest {
 
     public static class Config extends AbstractBaseJdbcTestConfig {

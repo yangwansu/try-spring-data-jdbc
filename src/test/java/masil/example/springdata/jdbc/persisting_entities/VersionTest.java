@@ -23,7 +23,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.springframework.test.annotation.DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD;
 
 @DirtiesContext(classMode = AFTER_EACH_TEST_METHOD)
-@SpringJUnitConfig(value = VersionTest.Config.class)
+@SpringJUnitConfig
 public class VersionTest {
 
     public static class Config extends AbstractBaseJdbcTestConfig {

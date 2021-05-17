@@ -18,7 +18,7 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import static org.springframework.test.annotation.DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD;
 
 @DirtiesContext(classMode = AFTER_EACH_TEST_METHOD)
-@SpringJUnitConfig(classes = OneToOneTest.Config.class)
+@SpringJUnitConfig
 public class OneToOneTest {
 
     public static class Config extends AbstractBaseJdbcTestConfig {
