@@ -3,10 +3,10 @@ package masil.example.springdata.jdbc.identity;
 import lombok.Getter;
 import lombok.Value;
 import lombok.With;
+import masil.example.springdata.jdbc.AbstractBaseJdbcTestConfig;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.annotation.Id;
@@ -16,44 +16,28 @@ import org.springframework.data.convert.ReadingConverter;
 import org.springframework.data.convert.WritingConverter;
 import org.springframework.data.domain.Persistable;
 import org.springframework.data.jdbc.core.JdbcAggregateOperations;
-import org.springframework.data.jdbc.core.convert.JdbcCustomConversions;
-import org.springframework.data.jdbc.repository.config.AbstractJdbcConfiguration;
 import org.springframework.data.relational.core.mapping.Table;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.jdbc.datasource.DataSourceTransactionManager;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
-import org.springframework.transaction.TransactionManager;
 
-import javax.sql.DataSource;
 import java.util.Arrays;
+import java.util.List;
 
 @SpringJUnitConfig(value = MappingCompositeIDToPKTest.Config.class)
 public class MappingCompositeIDToPKTest {
 
-
     @Configuration
-    public static class Config extends AbstractJdbcConfiguration {
-        @Bean
-        DataSource dataSource() {
-            return new EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.HSQL).addScript("MappingCompositeIDToPKTest.sql").build();
-        }
-        @Bean
-        NamedParameterJdbcOperations jdbcOperations(DataSource dataSource) {
-            return new NamedParameterJdbcTemplate(dataSource);
-        }
-        @Bean
-        TransactionManager transactionManager(DataSource dataSource) {
-            return new DataSourceTransactionManager(dataSource);
+    public static class Config extends AbstractBaseJdbcTestConfig {
+
+        @Override
+        protected String getScript() {
+            return "MappingCompositeIDToPKTest.sql";
         }
 
-        @Bean
         @Override
-        public JdbcCustomConversions jdbcCustomConversions() {
-            return new JdbcCustomConversions(Arrays.asList(StringToTestEntityId.INSTANCE, TestEntityIdToString.INSTANCE));
+        protected List<Object> getConverters() {
+            return Arrays.asList(StringToTestEntityId.INSTANCE, TestEntityIdToString.INSTANCE);
         }
+
     }
 
     @Autowired

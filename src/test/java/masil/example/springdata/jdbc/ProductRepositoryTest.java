@@ -9,8 +9,16 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringJUnitConfig(classes = DataJdbcConfiguration.class)
+@SpringJUnitConfig(classes = ProductRepositoryTest.Config.class)
 public class ProductRepositoryTest {
+
+
+    public static class Config extends AbstractBaseJdbcTestConfig {
+        @Override
+        protected String getScript() {
+            return "schema.sql";
+        }
+    }
 
     @Autowired
     ProductRepository repository;

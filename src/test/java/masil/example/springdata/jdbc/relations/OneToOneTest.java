@@ -4,7 +4,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Value;
-import masil.example.springdata.jdbc.DataJdbcConfiguration;
+import masil.example.springdata.jdbc.AbstractBaseJdbcTestConfig;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Id;
@@ -14,9 +14,15 @@ import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
-@SpringJUnitConfig(classes = DataJdbcConfiguration.class)
+@SpringJUnitConfig(classes = OneToOneTest.Config.class)
 public class OneToOneTest {
 
+    public static class Config extends AbstractBaseJdbcTestConfig {
+        @Override
+        protected String getScript() {
+            return "schema.sql";
+        }
+    }
 
 
     @Autowired

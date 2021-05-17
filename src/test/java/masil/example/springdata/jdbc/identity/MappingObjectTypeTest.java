@@ -4,10 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
+import masil.example.springdata.jdbc.AbstractBaseJdbcTestConfig;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.annotation.Id;
@@ -15,19 +15,11 @@ import org.springframework.data.annotation.PersistenceConstructor;
 import org.springframework.data.convert.ReadingConverter;
 import org.springframework.data.convert.WritingConverter;
 import org.springframework.data.jdbc.core.JdbcAggregateOperations;
-import org.springframework.data.jdbc.core.convert.JdbcCustomConversions;
-import org.springframework.data.jdbc.repository.config.AbstractJdbcConfiguration;
 import org.springframework.data.relational.core.mapping.Table;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.jdbc.datasource.DataSourceTransactionManager;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
-import org.springframework.transaction.TransactionManager;
 
-import javax.sql.DataSource;
 import java.util.Arrays;
+import java.util.List;
 
 import static lombok.AccessLevel.PRIVATE;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -36,27 +28,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class MappingObjectTypeTest {
 
     @Configuration
-    public static class Config extends AbstractJdbcConfiguration {
-
-        @Bean
-        DataSource dataSource() {
-            return new EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.HSQL).addScript("MappingObjectTypeTest.sql").build();
-        }
-        @Bean
-        NamedParameterJdbcOperations jdbcOperations(DataSource dataSource) {
-            return new NamedParameterJdbcTemplate(dataSource);
-        }
-        @Bean
-        TransactionManager transactionManager(DataSource dataSource) {
-            return new DataSourceTransactionManager(dataSource);
-        }
-
-        @Bean
+    public static class Config extends AbstractBaseJdbcTestConfig {
         @Override
-        public JdbcCustomConversions jdbcCustomConversions() {
-            return new JdbcCustomConversions(Arrays.asList(new IntegerToTestEntityIdConvertor(), new TestEntityIdToIntegerConvertor()));
+        protected String getScript() {
+            return "MappingObjectTypeTest.sql";
         }
 
+        @Override
+        protected List<Object> getConverters() {
+            return Arrays.asList(new IntegerToTestEntityIdConvertor(), new TestEntityIdToIntegerConvertor());
+        }
     }
 
     @Autowired

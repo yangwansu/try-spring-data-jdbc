@@ -20,9 +20,15 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 
 @Transactional
-@SpringJUnitConfig(classes = DataJdbcConfiguration.class)
+@SpringJUnitConfig(classes = FooRepositoryTest.Config.class)
 public class FooRepositoryTest {
 
+    public static class Config extends AbstractBaseJdbcTestConfig {
+        @Override
+        protected String getScript() {
+            return "schema.sql";
+        }
+    }
 
     @BeforeEach
     void setUp() {

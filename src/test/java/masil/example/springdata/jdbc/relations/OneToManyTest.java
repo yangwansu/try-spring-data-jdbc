@@ -4,7 +4,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Value;
-import masil.example.springdata.jdbc.DataJdbcConfiguration;
+import masil.example.springdata.jdbc.AbstractBaseJdbcTestConfig;
 import org.assertj.core.util.Sets;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +18,16 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import java.util.HashSet;
 import java.util.Set;
 
-@SpringJUnitConfig(classes = DataJdbcConfiguration.class)
+@SpringJUnitConfig(classes = OneToManyTest.Config.class)
 public class OneToManyTest {
+
+    public static class Config extends AbstractBaseJdbcTestConfig {
+        @Override
+        protected String getScript() {
+            return "schema.sql";
+        }
+    }
+
 
     @Autowired
     JdbcAggregateOperations operations;

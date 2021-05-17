@@ -17,8 +17,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @DisplayName("Object Mapping")
-@SpringJUnitConfig(classes = DataJdbcConfiguration.class)
+@SpringJUnitConfig(classes = ObjectCreationTest.Config.class)
 public class ObjectCreationTest {
+
+    public static class Config extends AbstractBaseJdbcTestConfig {
+        @Override
+        protected String getScript() {
+            return "schema.sql";
+        }
+    }
 
     @Autowired
     JdbcAggregateOperations operations;
