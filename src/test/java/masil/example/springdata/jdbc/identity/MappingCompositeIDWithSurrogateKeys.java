@@ -11,10 +11,14 @@ import org.springframework.data.jdbc.repository.config.EnableJdbcRepositories;
 import org.springframework.data.relational.core.mapping.Embedded;
 import org.springframework.data.relational.core.mapping.Table;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import java.util.Optional;
 
+import static org.springframework.test.annotation.DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD;
+
+@DirtiesContext(classMode = AFTER_EACH_TEST_METHOD)
 @SpringJUnitConfig(value = MappingCompositeIDWithSurrogateKeys.Config.class)
 public class MappingCompositeIDWithSurrogateKeys {
 

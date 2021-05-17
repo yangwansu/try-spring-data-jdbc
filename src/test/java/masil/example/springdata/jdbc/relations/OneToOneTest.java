@@ -5,17 +5,19 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Value;
 import masil.example.springdata.jdbc.AbstractBaseJdbcTestConfig;
-import masil.example.springdata.jdbc.identity.MappingCompositeIDToCompositeKeysTest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.PersistenceConstructor;
-import org.springframework.data.jdbc.core.JdbcAggregateOperations;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
+import static org.springframework.test.annotation.DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD;
+
+@DirtiesContext(classMode = AFTER_EACH_TEST_METHOD)
 @SpringJUnitConfig(classes = OneToOneTest.Config.class)
 public class OneToOneTest {
 

@@ -12,12 +12,15 @@ import org.springframework.data.annotation.PersistenceConstructor;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.jdbc.core.JdbcAggregateOperations;
 import org.springframework.data.relational.core.mapping.Table;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.springframework.test.annotation.DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD;
 
 @DisplayName("Object Mapping")
+@DirtiesContext(classMode = AFTER_EACH_TEST_METHOD)
 @SpringJUnitConfig(classes = ObjectCreationTest.Config.class)
 public class ObjectCreationTest {
 

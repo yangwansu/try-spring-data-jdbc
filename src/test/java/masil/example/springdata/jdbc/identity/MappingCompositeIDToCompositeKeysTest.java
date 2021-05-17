@@ -9,8 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.relational.core.mapping.Table;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
+import static org.springframework.test.annotation.DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD;
+
+@DirtiesContext(classMode = AFTER_EACH_TEST_METHOD)
 @SpringJUnitConfig(MappingCompositeIDToCompositeKeysTest.Config.class)
 public class MappingCompositeIDToCompositeKeysTest {
 

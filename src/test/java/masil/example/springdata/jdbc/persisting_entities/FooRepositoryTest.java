@@ -10,6 +10,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.conversion.DbActionExecutionException;
 import org.springframework.data.relational.core.mapping.Table;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,8 +19,10 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.springframework.test.annotation.DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD;
 
 
+@DirtiesContext(classMode = AFTER_EACH_TEST_METHOD)
 @Transactional
 @SpringJUnitConfig(classes = FooRepositoryTest.Config.class)
 public class FooRepositoryTest {
