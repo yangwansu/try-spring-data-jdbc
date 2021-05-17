@@ -14,12 +14,13 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.PersistenceConstructor;
 import org.springframework.data.convert.ReadingConverter;
 import org.springframework.data.convert.WritingConverter;
-import org.springframework.data.jdbc.core.JdbcAggregateOperations;
 import org.springframework.data.relational.core.mapping.Table;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static lombok.AccessLevel.PRIVATE;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -39,9 +40,10 @@ public class MappingObjectTypeTest {
             return Arrays.asList(new IntegerToTestEntityIdConvertor(), new TestEntityIdToIntegerConvertor());
         }
     }
-
     @Autowired
-    JdbcAggregateOperations aggregateOperations;
+    TestEntityRepository repository;
+
+    interface TestEntityRepository extends CrudRepository<TestEntity, TestEntityId> { }
 
     @Getter
     @Table("TEST_TABLE")
@@ -81,18 +83,13 @@ public class MappingObjectTypeTest {
         }
     }
 
-
     @Test
     @DisplayName("Object Type ID Mapping ")
     void objectTypeId() {
+        TestEntity saved = repository.save(TestEntity.of("xxx"));
 
-        TestEntity saved = aggregateOperations.save(TestEntity.of("xxx"));
+        Optional<TestEntity> find = repository.findById(saved.getId());
 
-        TestEntity find = aggregateOperations.findById(saved.getId(), TestEntity.class);
-
-        assert find != null;
-
-        assertThat(find.getId()).isEqualTo(saved.getId());
-
+        assertThat(find).get().hasFieldOrPropertyWithValue("id", saved.getId());
     }
 }

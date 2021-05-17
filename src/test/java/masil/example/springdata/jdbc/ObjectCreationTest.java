@@ -32,7 +32,7 @@ public class ObjectCreationTest {
 
     @Table("PRODUCT")
     @Getter
-    public static class TestObject1 {
+    public static class TestEntity {
         @Id
         private Long id;
         private String name;
@@ -40,11 +40,11 @@ public class ObjectCreationTest {
         @Transient
         private boolean defaultConstructCall = false;
 
-        private TestObject1() {
+        private TestEntity() {
             defaultConstructCall = true;
         }
 
-        public TestObject1(String name) {
+        public TestEntity(String name) {
             this.name = name;
         }
 
@@ -53,8 +53,8 @@ public class ObjectCreationTest {
     @Test
     @DisplayName("If there’s a no-argument constructor, it will be used. Other constructors will be ignored.")
     void object_creation_resolution_algorithm_1() {
-        TestObject1 saved = operations.save(new TestObject1("macbook"));
-        TestObject1 found = operations.findById(saved.getId(), TestObject1.class);
+        TestEntity saved = operations.save(new TestEntity("macbook"));
+        TestEntity found = operations.findById(saved.getId(), TestEntity.class);
 
         assert found != null;
 

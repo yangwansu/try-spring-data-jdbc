@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.PersistenceConstructor;
-import org.springframework.data.jdbc.core.JdbcAggregateOperations;
 import org.springframework.data.jdbc.repository.config.EnableJdbcRepositories;
 import org.springframework.data.relational.core.mapping.Embedded;
 import org.springframework.data.relational.core.mapping.Table;
@@ -31,8 +30,12 @@ public class MappingCompositeIDWithSurrogateKeys {
     }
 
     @Autowired
-    JdbcAggregateOperations aggregateOperations;
+    TestEntityRepository repository;
 
+    interface TestEntityRepository extends CrudRepository<TestEntity, TestEntityId> {
+
+        Optional<TestEntity> findByEntityId(TestEntityId id);
+    }
 
 
     @Table("TEST_TABLE")
@@ -58,14 +61,10 @@ public class MappingCompositeIDWithSurrogateKeys {
     }
 
 
-
-    @Autowired
-    TestEntityRepository repository;
-
     @Test
     void name() {
         TestEntity entity = TestEntity.of(TestEntityId.of(1L, "abc"));
-        aggregateOperations.save(entity);
+        repository.save(entity);
 
         TestEntityId id = entity.getId();
 
@@ -73,12 +72,6 @@ public class MappingCompositeIDWithSurrogateKeys {
 
         System.out.println(find);
 
-
-
     }
 }
 
-interface TestEntityRepository extends CrudRepository<MappingCompositeIDWithSurrogateKeys.TestEntity, Long> {
-
-    Optional<MappingCompositeIDWithSurrogateKeys.TestEntity> findByEntityId(MappingCompositeIDWithSurrogateKeys.TestEntityId id);
-}

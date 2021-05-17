@@ -16,12 +16,13 @@ import org.springframework.data.annotation.Transient;
 import org.springframework.data.convert.ReadingConverter;
 import org.springframework.data.convert.WritingConverter;
 import org.springframework.data.domain.Persistable;
-import org.springframework.data.jdbc.core.JdbcAggregateOperations;
 import org.springframework.data.relational.core.mapping.Table;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static lombok.AccessLevel.PRIVATE;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -41,9 +42,10 @@ public class MappingIDToPkTest {
             return Arrays.asList(new LongToTestEntityIdConvertor(), new TestEntityIdToLongConvertor());
         }
     }
-
     @Autowired
-    JdbcAggregateOperations aggregateOperations;
+    TestEntityRepository repository;
+
+    interface TestEntityRepository extends CrudRepository<TestEntity, TestEntityId> { }
 
     @Getter
     @Table("TEST_TABLE")
@@ -96,11 +98,11 @@ public class MappingIDToPkTest {
     void name() {
         TestEntity entity = TestEntity.of(TestEntityId.of(1L), "foo");
         assertThat(entity.isNew()).isTrue();
-        aggregateOperations.save(entity);
-        //aggregateOperations.save(entity);
+        repository.save(entity);
+        //repository.save(entity);
 
-        TestEntity find = aggregateOperations.findById(entity.getId(), TestEntity.class);
-        assertThat(find.isNew()).isFalse();
+        Optional<TestEntity> find = repository.findById(entity.getId());
+        assertThat(find).get().hasFieldOrPropertyWithValue("isNew", false);
     }
 }
 

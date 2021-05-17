@@ -7,8 +7,8 @@ import masil.example.springdata.jdbc.AbstractBaseJdbcTestConfig;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.jdbc.core.JdbcAggregateOperations;
 import org.springframework.data.relational.core.mapping.Table;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 @SpringJUnitConfig(MappingCompositeIDToCompositeKeysTest.Config.class)
@@ -23,16 +23,15 @@ public class MappingCompositeIDToCompositeKeysTest {
     }
 
     @Autowired
-    JdbcAggregateOperations jdbcAggregateOperations;
+    TestEntityRepository repository;
 
+    interface TestEntityRepository extends CrudRepository<TestEntity, Long> { }
 
     @Getter
     @Table("TEST_TABLE")
     @AllArgsConstructor(staticName = "of")
     public static class TestEntity {
-
         private final TestEntityId id;
-
     }
 
     @Value(staticConstructor = "of")

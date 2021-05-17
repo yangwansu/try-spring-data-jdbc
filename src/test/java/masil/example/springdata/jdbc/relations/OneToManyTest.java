@@ -10,9 +10,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.PersistenceConstructor;
-import org.springframework.data.jdbc.core.JdbcAggregateOperations;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import java.util.HashSet;
@@ -30,15 +30,17 @@ public class OneToManyTest {
 
 
     @Autowired
-    JdbcAggregateOperations operations;
+    TestEntityRepository repository;
+
+    interface TestEntityRepository extends CrudRepository<TestEntity, Long> { }
 
     @Getter
     @Table("PRODUCT")
     @AllArgsConstructor(access = AccessLevel.PRIVATE, onConstructor_=@PersistenceConstructor)
-    public static class Project {
+    public static class TestEntity {
 
-        public static Project of(String name) {
-            return new Project(name, Sets.newHashSet());
+        public static TestEntity of(String name) {
+            return new TestEntity(name, Sets.newHashSet());
         }
 
         @Id
@@ -48,15 +50,15 @@ public class OneToManyTest {
         @Column("PRODUCT_ID")
         private final Set<Category> categories;
 
-        private Project(String name, Set<Category> category) {
+        private TestEntity(String name, Set<Category> category) {
             this(null, name, category);
         }
 
-        public Project addCategory(Category category) {
+        public TestEntity addCategory(Category category) {
             Set<Category> categories = new HashSet<>(getCategories());
             categories.add(category);
 
-            return new Project(getId(), getName(), categories);
+            return new TestEntity(getId(), getName(), categories);
         }
     }
 
@@ -68,13 +70,12 @@ public class OneToManyTest {
 
     @Test
     void name() {
-
-        Project project = Project.of("ibm")
+        TestEntity entity = TestEntity.of("ibm")
                 .addCategory(Category.of("notebook"));
 
-        project = operations.save(project);
+        entity = repository.save(entity);
 
-        System.out.println(operations.findById(project.getId(), Project.class));
+        System.out.println(repository.findById(entity.getId()));
     }
 
 }

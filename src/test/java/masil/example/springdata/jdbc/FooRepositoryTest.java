@@ -30,6 +30,13 @@ public class FooRepositoryTest {
         }
     }
 
+    interface MissingIdProductRepository extends CrudRepository<MissingIdProduct, Long> { }
+    interface MissingSetterProductRepository extends CrudRepository<MissingSetterProduct, Long> { }
+    interface UnknownRepository extends CrudRepository<Unknown, Long> { }
+    interface FooRepository extends CrudRepository<Foo, Long> { }
+    interface BarRepository extends CrudRepository<Bar, Long> { }
+
+
     @BeforeEach
     void setUp() {
         assertThat(fooRepository.count()).isZero();
@@ -158,18 +165,5 @@ public class FooRepositoryTest {
         assertThat(found).isPresent();
 
     }
-}
-
-interface MissingIdProductRepository extends CrudRepository<FooRepositoryTest.MissingIdProduct, Long> {
-}
-interface MissingSetterProductRepository extends CrudRepository<FooRepositoryTest.MissingSetterProduct, Long> {
-}
-interface UnknownRepository extends CrudRepository<FooRepositoryTest.Unknown, Long> {
-}
-
-interface FooRepository extends CrudRepository<FooRepositoryTest.Foo, Long> {
-}
-
-interface BarRepository extends CrudRepository<FooRepositoryTest.Bar, Long> {
 }
 

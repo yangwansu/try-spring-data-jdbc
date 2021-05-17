@@ -15,12 +15,15 @@ import org.springframework.data.annotation.Transient;
 import org.springframework.data.convert.ReadingConverter;
 import org.springframework.data.convert.WritingConverter;
 import org.springframework.data.domain.Persistable;
-import org.springframework.data.jdbc.core.JdbcAggregateOperations;
 import org.springframework.data.relational.core.mapping.Table;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringJUnitConfig(value = MappingCompositeIDToPKTest.Config.class)
 public class MappingCompositeIDToPKTest {
@@ -41,7 +44,9 @@ public class MappingCompositeIDToPKTest {
     }
 
     @Autowired
-    JdbcAggregateOperations jdbcAggregateOperations;
+    TestEntityRepository repository;
+
+    interface TestEntityRepository extends CrudRepository<TestEntity, TestEntityId> { }
 
     @Getter
     @Table("TEST_TABLE1")
@@ -107,11 +112,12 @@ public class MappingCompositeIDToPKTest {
     @DisplayName("Mapping Composite Identity to a PK")
     void map_to_pk() {
         TestEntity entity = TestEntity.of(TestEntityId.of(1L,"Wansu"), "foo");
-        jdbcAggregateOperations.save(entity);
+        repository.save(entity);
 
         assert entity.getId() != null;
 
-        TestEntity find = jdbcAggregateOperations.findById(entity.getId(), TestEntity.class);
+        Optional<TestEntity> find = repository.findById(entity.getId());
+        assertThat(find).isPresent();
 
     }
 }
