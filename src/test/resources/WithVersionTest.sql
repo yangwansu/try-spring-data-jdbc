@@ -1,0 +1,1 @@
+CREATE TABLE IF NOT EXISTS TEST_TABLE (id bigint primary key, version bigint )

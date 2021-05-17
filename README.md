@@ -11,6 +11,8 @@
     - [Mapping Composite Identity to Composite Keys](src/test/java/masil/example/springdata/jdbc/identity/MappingCompositeIDToCompositeKeysTest.java)
     - [Mapping Composite Identity With Surrogate Keys](src/test/java/masil/example/springdata/jdbc/identity/MappingCompositeIDWithSurrogateKeys.java)
 
+## Persisting Entities 
+  - [Optimistic Locking](src/test/java/masil/example/springdata/jdbc/optimisticLocking/WithVersionTest.java)
 
 
 ## Dependencies 
