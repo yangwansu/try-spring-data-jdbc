@@ -1,8 +1,9 @@
-package masil.example.springdata.jdbc;
+package masil.example.springdata.jdbc.persisting_entities;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import masil.example.springdata.jdbc.AbstractBaseJdbcTestConfig;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package masil.example.springdata.jdbc.optimisticLocking;
+package masil.example.springdata.jdbc.persisting_entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,6 +12,7 @@ import org.springframework.data.annotation.PersistenceConstructor;
 import org.springframework.data.annotation.Version;
 import org.springframework.data.relational.core.mapping.Table;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import java.util.Optional;
@@ -19,22 +20,23 @@ import java.util.Optional;
 import static lombok.AccessLevel.PRIVATE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.springframework.test.annotation.DirtiesContext.ClassMode.*;
 
-@SpringJUnitConfig(value = WithVersionTest.Config.class)
-public class WithVersionTest {
+@DirtiesContext(classMode = AFTER_EACH_TEST_METHOD)
+@SpringJUnitConfig(value = VersionTest.Config.class)
+public class VersionTest {
 
     public static class Config extends AbstractBaseJdbcTestConfig {
         @Override
         protected String getScript() {
-            return "WithVersionTest.sql";
+            return "VersionTest.sql";
         }
     }
 
     @Autowired
     TestEntityRepository repository;
 
-    interface TestEntityRepository extends CrudRepository<TestEntity, Long> {
-    }
+    interface TestEntityRepository extends CrudRepository<TestEntity, Long> { }
 
     /**
      * Property inspection

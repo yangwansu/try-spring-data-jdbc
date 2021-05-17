@@ -1,7 +1,8 @@
-package masil.example.springdata.jdbc;
+package masil.example.springdata.jdbc.persisting_entities;
 
 import lombok.Getter;
 import lombok.Setter;
+import masil.example.springdata.jdbc.AbstractBaseJdbcTestConfig;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
