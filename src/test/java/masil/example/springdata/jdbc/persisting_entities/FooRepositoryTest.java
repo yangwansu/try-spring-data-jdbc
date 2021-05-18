@@ -29,16 +29,28 @@ public class FooRepositoryTest {
 
     public static class Config extends AbstractBaseJdbcTestConfig {
         @Override
-        protected String getScript() {
-            return "schema.sql";
+        protected String[] getSql() {
+            return new String[]{
+                    "CREATE TABLE IF NOT EXISTS product (id INTEGER IDENTITY PRIMARY KEY , name varchar(100), price BIGINT, createdAt bigint)",
+                    "CREATE TABLE IF NOT EXISTS category (PRODUCT_ID INTEGER  , name varchar(100))"
+            };
         }
     }
 
-    interface MissingIdProductRepository extends CrudRepository<MissingIdProduct, Long> { }
-    interface MissingSetterProductRepository extends CrudRepository<MissingSetterProduct, Long> { }
-    interface UnknownRepository extends CrudRepository<Unknown, Long> { }
-    interface FooRepository extends CrudRepository<Foo, Long> { }
-    interface BarRepository extends CrudRepository<Bar, Long> { }
+    interface MissingIdProductRepository extends CrudRepository<MissingIdProduct, Long> {
+    }
+
+    interface MissingSetterProductRepository extends CrudRepository<MissingSetterProduct, Long> {
+    }
+
+    interface UnknownRepository extends CrudRepository<Unknown, Long> {
+    }
+
+    interface FooRepository extends CrudRepository<Foo, Long> {
+    }
+
+    interface BarRepository extends CrudRepository<Bar, Long> {
+    }
 
 
     @BeforeEach
@@ -68,12 +80,12 @@ public class FooRepositoryTest {
     @Test
     @Rollback
     void when_save_with() {
-        assertThatThrownBy(()-> unknownRepository.save(new Unknown()))
+        assertThatThrownBy(() -> unknownRepository.save(new Unknown()))
                 .isInstanceOf(DbActionExecutionException.class)
                 .hasRootCauseMessage("user lacks privilege or object not found: UNKNOWN");
 
 
-        assertThatThrownBy(()-> missingIdProductRepository.save(new MissingIdProduct()))
+        assertThatThrownBy(() -> missingIdProductRepository.save(new MissingIdProduct()))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("After saving the identifier must not be null!");
 

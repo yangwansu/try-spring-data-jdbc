@@ -21,8 +21,10 @@ public class MappingCompositeIDToCompositeKeysTest {
     @Configuration
     public static class Config extends AbstractBaseJdbcTestConfig {
         @Override
-        protected String getScript() {
-            return "MappingCompositeIDToCompositeKeysTest.sql";
+        protected String[] getSql() {
+            return new String[]{
+                    "CREATE TABLE IF NOT EXISTS TEST_TABLE (id BIGINT, name varchar(100), PRIMARY KEY(id, name))"
+            };
         }
     }
 

@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.PersistenceConstructor;
-import org.springframework.data.jdbc.repository.config.EnableJdbcRepositories;
 import org.springframework.data.relational.core.mapping.Embedded;
 import org.springframework.data.relational.core.mapping.Table;
 import org.springframework.data.repository.CrudRepository;
@@ -24,12 +23,12 @@ public class MappingCompositeIDWithSurrogateKeys {
 
 
     @Configuration
-    @EnableJdbcRepositories
     public static class Config extends AbstractBaseJdbcTestConfig {
-
         @Override
-        protected String getScript() {
-            return "MappingCompositeIDWithSurrogateKeysTest.sql";
+        protected String[] getSql() {
+            return new String[] {
+                    "CREATE TABLE IF NOT EXISTS TEST_TABLE (id integer primary key identity, key1 bigint, key2  varchar(100), UNIQUE (key1, key2))"
+            };
         }
     }
 

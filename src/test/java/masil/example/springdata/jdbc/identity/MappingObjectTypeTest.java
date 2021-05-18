@@ -33,9 +33,12 @@ public class MappingObjectTypeTest {
 
     @Configuration
     public static class Config extends AbstractBaseJdbcTestConfig {
+
         @Override
-        protected String getScript() {
-            return "MappingObjectTypeTest.sql";
+        protected String[] getSql() {
+            return new String[]{
+                    "CREATE TABLE IF NOT EXISTS TEST_TABLE (id INTEGER IDENTITY PRIMARY KEY , name varchar(100), score INTEGER , createdAt bigint)"
+            };
         }
 
         @Override

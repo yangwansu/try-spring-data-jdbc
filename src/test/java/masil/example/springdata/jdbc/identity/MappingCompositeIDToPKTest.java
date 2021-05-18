@@ -35,9 +35,12 @@ public class MappingCompositeIDToPKTest {
     public static class Config extends AbstractBaseJdbcTestConfig {
 
         @Override
-        protected String getScript() {
-            return "MappingCompositeIDToPKTest.sql";
+        protected String[] getSql() {
+            return new String[] {
+                    "CREATE TABLE IF NOT EXISTS TEST_TABLE1 (id varchar(100) primary key, name varchar(100))"
+            };
         }
+
 
         @Override
         protected List<Object> getConverters() {

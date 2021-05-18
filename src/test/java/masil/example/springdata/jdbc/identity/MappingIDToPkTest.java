@@ -35,9 +35,12 @@ public class MappingIDToPkTest {
 
     @Configuration
     public static class Config extends AbstractBaseJdbcTestConfig {
+
         @Override
-        protected String getScript() {
-            return "MappingIDToPkTest.sql";
+        protected String[] getSql() {
+            return new String[] {
+                    "CREATE TABLE IF NOT EXISTS TEST_TABLE (id BIGINT PRIMARY KEY, name varchar(100))"
+            };
         }
 
         @Override

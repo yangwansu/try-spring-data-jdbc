@@ -28,8 +28,10 @@ public class VersionTest {
 
     public static class Config extends AbstractBaseJdbcTestConfig {
         @Override
-        protected String getScript() {
-            return "VersionTest.sql";
+        protected String[] getSql() {
+            return new String[]{
+                    "CREATE TABLE IF NOT EXISTS TEST_TABLE (id bigint primary key, version bigint)"
+            };
         }
     }
 
