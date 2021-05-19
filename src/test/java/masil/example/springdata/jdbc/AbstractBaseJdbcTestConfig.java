@@ -24,7 +24,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.BinaryOperator;
 
 @Configuration
 @EnableJdbcRepositories(considerNestedRepositories = true)
@@ -45,12 +44,7 @@ public abstract class AbstractBaseJdbcTestConfig extends AbstractJdbcConfigurati
     @Bean
     @SneakyThrows
     DataSource dataSource() {
-        String str = Arrays.stream(getSql()).reduce(new BinaryOperator<String>() {
-            @Override
-            public String apply(String s, String s2) {
-                return s+"\n"+s2;
-            }
-        }).orElse("");
+        String str = Arrays.stream(getSql()).reduce((s, s2) -> s+"\n"+s2).orElse("");
 
         File file = createTempFile();
 

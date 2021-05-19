@@ -21,5 +21,6 @@
     - [@Version을 사용](src/test/java/masil/example/springdata/jdbc/identity/from_client/UsingVersionTest.java)
 ## Persisting Entities 
   - [Version](src/test/java/masil/example/springdata/jdbc/persisting_entities/VersionTest.java)
+  - [Construct-Only Performance](src/test/java/masil/example/springdata/jdbc/persisting_entities/ConstructorOnlyPerformanceTest.java)
 
 

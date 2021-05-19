@@ -24,7 +24,7 @@ repositories {
 dependencies {
   implementation 'org.springframework.data:spring-data-jdbc:2.2.0'
   runtimeOnly 'org.hsqldb:hsqldb:2.5.2'
-  runtimeOnly 'org.slf4j:slf4j-log4j12:1.7.26'
+  implementation 'org.slf4j:slf4j-log4j12:1.7.26'
 
 
   testImplementation(platform('org.junit:junit-bom:5.7.1'))
