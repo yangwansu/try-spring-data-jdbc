@@ -26,6 +26,10 @@
 
 ## [9.6. Persisting Entities](https://docs.spring.io/spring-data/jdbc/docs/current/reference/html/#jdbc.entity-persistence)
 
+### [9.6.7. Embedded entities](https://docs.spring.io/spring-data/jdbc/docs/current/reference/html/#jdbc.entity-persistence.embedded-entities)
+Embedded Entity 는 테이블이 하나인 경우에도 Data Model에 Value Object를 포함 시키는데 유용하다.
+
+- [OnEmpty Test](src/test/java/masil/example/springdata/jdbc/persisting_entities/embedded_entities/OptionTest.java)
 
 ### [9.6.8. Entity State Detection Strategies](https://docs.spring.io/spring-data/jdbc/docs/current/reference/html/#is-new-state-detection)
 
