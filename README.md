@@ -28,7 +28,10 @@
 
 
 ### [9.6.8. Entity State Detection Strategies](https://docs.spring.io/spring-data/jdbc/docs/current/reference/html/#is-new-state-detection)
- - [VersionTest](src/test/java/masil/example/springdata/jdbc/persisting_entities/VersionTest.java)
+
+Entity 의 상태가 새로운 객체(New)인지 확인 하는 옵션들  
+ - [@Version - properties inspection Test](src/test/java/masil/example/springdata/jdbc/persisting_entities/VersionPropertiesInspectionTest.java)
+
 ### [9.6.10. Optimistic Locking](https://docs.spring.io/spring-data/jdbc/docs/current/reference/html/#jdbc.entity-persistence.optimistic-locking)
 
 Aggregate Root 에 @Version Annotation을 사용한 Filed 를 사용해 낙관적 락을 제공한다. 

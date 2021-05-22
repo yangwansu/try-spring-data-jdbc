@@ -4,11 +4,16 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import masil.example.springdata.jdbc.AbstractBaseJdbcTestConfig;
 import org.assertj.core.api.AbstractLongAssert;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.PersistenceConstructor;
 import org.springframework.data.annotation.Version;
+import org.springframework.data.jdbc.core.JdbcAggregateTemplate;
+import org.springframework.data.jdbc.core.mapping.JdbcMappingContext;
+import org.springframework.data.relational.core.mapping.RelationalPersistentEntity;
 import org.springframework.data.relational.core.mapping.Table;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.test.annotation.DirtiesContext;
@@ -22,7 +27,7 @@ import static org.springframework.test.annotation.DirtiesContext.ClassMode.BEFOR
 
 @DirtiesContext(classMode = BEFORE_EACH_TEST_METHOD)
 @SpringJUnitConfig
-public class VersionTest {
+public class VersionPropertiesInspectionTest {
 
     public static class Config extends AbstractBaseJdbcTestConfig {
         @Override
@@ -48,10 +53,37 @@ public class VersionTest {
         private final Long version;
     }
 
+    interface TestEntityRepository extends CrudRepository<TestEntity, Long> { }
+
     @Autowired
     TestEntityRepository repository;
+    @Autowired
+    JdbcMappingContext context;
 
-    interface TestEntityRepository extends CrudRepository<TestEntity, Long> { }
+    RelationalPersistentEntity<?> persistentEntity;
+
+    /**
+     * @see JdbcAggregateTemplate#save(java.lang.Object)
+     *
+     */
+    @BeforeEach
+    void setUp() {
+        persistentEntity = context.getRequiredPersistentEntity(TestEntity.class);
+    }
+
+    @Test
+    @DisplayName("Detect whether an entity is new")
+    void detect_whether_an_entity_is_new() {
+        TestEntity newEntity = TestEntity.newEntity(999L);
+
+        assertThat(newEntity.getId()).isNotNull();
+        assertThat(newEntity.getVersion()).isNull();
+        assertThat(persistentEntity.isNew(newEntity)).isTrue();
+
+        TestEntity saved = repository.save(newEntity);
+        assertThat(saved.getVersion()).isEqualTo(0L); //version null -> 0
+        assertThat(persistentEntity.isNew(saved)).isFalse();
+    }
 
     @Test
     void update_version() {
