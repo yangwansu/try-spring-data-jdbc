@@ -19,8 +19,17 @@
     - [Fragment Interface 사용](src/test/java/masil/example/springdata/jdbc/identity/from_client/UsingFragmentsInterfaceTest.java)
     - [Persistable 사용](src/test/java/masil/example/springdata/jdbc/identity/from_client/UsingPersistableTest.java)
     - [@Version을 사용](src/test/java/masil/example/springdata/jdbc/identity/from_client/UsingVersionTest.java)
-## Persisting Entities 
-  - [Version](src/test/java/masil/example/springdata/jdbc/persisting_entities/VersionTest.java)
+## Persisting Entities
   - [Construct-Only Performance](src/test/java/masil/example/springdata/jdbc/persisting_entities/ConstructorOnlyPerformanceTest.java)
 
 
+
+## [9.6. Persisting Entities](https://docs.spring.io/spring-data/jdbc/docs/current/reference/html/#jdbc.entity-persistence)
+
+
+### [9.6.8. Entity State Detection Strategies](https://docs.spring.io/spring-data/jdbc/docs/current/reference/html/#is-new-state-detection)
+ - [VersionTest](src/test/java/masil/example/springdata/jdbc/persisting_entities/VersionTest.java)
+### [9.6.10. Optimistic Locking](https://docs.spring.io/spring-data/jdbc/docs/current/reference/html/#jdbc.entity-persistence.optimistic-locking)
+
+Aggregate Root 에 @Version Annotation을 사용한 Filed 를 사용해 낙관적 락을 제공한다. 
+- [OptimisticLockingTest](src/test/java/masil/example/springdata/jdbc/persisting_entities/OptimisticLockingTest.java)
