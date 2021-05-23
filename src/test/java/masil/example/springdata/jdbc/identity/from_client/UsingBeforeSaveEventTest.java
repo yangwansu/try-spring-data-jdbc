@@ -25,36 +25,33 @@ import static lombok.AccessLevel.PRIVATE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.annotation.DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD;
 
-@SpringJUnitConfig
+@SpringJUnitConfig(classes = UsingBeforeSaveEventTest.class)
 @DirtiesContext(classMode = BEFORE_EACH_TEST_METHOD)
-public class UsingBeforeSaveEventTest {
+public class UsingBeforeSaveEventTest extends AbstractBaseJdbcTestConfig {
 
-    public static class Config extends AbstractBaseJdbcTestConfig {
+    AtomicLong atomicLong = new AtomicLong(0L);
 
-        AtomicLong atomicLong = new AtomicLong(0L);
+    @Override
+    protected String[] getSql() {
+        return new String[]{
+                "CREATE TABLE IF NOT EXISTS TEST_TABLE ( id bigint primary key, name varchar(100)) "
+        };
+    }
 
-        @Override
-        protected String[] getSql() {
-            return new String[]{
-                    "CREATE TABLE IF NOT EXISTS TEST_TABLE ( id bigint primary key, name varchar(100)) "
-            };
-        }
-
-        @Bean
-        public ApplicationListener<?> idInjector() {
-            return (ApplicationListener<ApplicationEvent>) (e) -> {
-                if (e instanceof BeforeSaveEvent) {
-                    BeforeSaveEvent<?> bse = (BeforeSaveEvent<?>) e;
-                    if (bse.getType().isAssignableFrom(TestEntity.class)) {
-                        if (bse.getEntity() instanceof TestEntity) {
-                            TestEntity entity = (TestEntity) bse.getEntity();
-                            entity.setId(atomicLong.get());
-                        }
+    @Bean
+    public ApplicationListener<?> idInjector() {
+        return (ApplicationListener<ApplicationEvent>) (e) -> {
+            if (e instanceof BeforeSaveEvent) {
+                BeforeSaveEvent<?> bse = (BeforeSaveEvent<?>) e;
+                if (bse.getType().isAssignableFrom(TestEntity.class)) {
+                    if (bse.getEntity() instanceof TestEntity) {
+                        TestEntity entity = (TestEntity) bse.getEntity();
+                        entity.setId(atomicLong.get());
                     }
                 }
+            }
 
-            };
-        }
+        };
     }
 
     @Getter

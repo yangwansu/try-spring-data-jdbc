@@ -7,7 +7,6 @@ import masil.example.springdata.jdbc.AbstractBaseJdbcTestConfig;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.PersistenceConstructor;
@@ -28,31 +27,26 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.annotation.DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD;
 
 @DirtiesContext(classMode = BEFORE_EACH_TEST_METHOD)
-@SpringJUnitConfig
-public class MappingCompositeIDToPKTest {
+@SpringJUnitConfig(classes = MappingCompositeIDToPKTest.class)
+public class MappingCompositeIDToPKTest extends AbstractBaseJdbcTestConfig {
 
-    @Configuration
-    public static class Config extends AbstractBaseJdbcTestConfig {
+    @Override
+    protected String[] getSql() {
+        return new String[]{
+                "CREATE TABLE IF NOT EXISTS TEST_TABLE1 (id varchar(100) primary key, name varchar(100))"
+        };
+    }
 
-        @Override
-        protected String[] getSql() {
-            return new String[] {
-                    "CREATE TABLE IF NOT EXISTS TEST_TABLE1 (id varchar(100) primary key, name varchar(100))"
-            };
-        }
-
-
-        @Override
-        protected List<Object> getConverters() {
-            return Arrays.asList(StringToTestEntityId.INSTANCE, TestEntityIdToString.INSTANCE);
-        }
-
+    @Override
+    protected List<Object> getConverters() {
+        return Arrays.asList(StringToTestEntityId.INSTANCE, TestEntityIdToString.INSTANCE);
     }
 
     @Autowired
     TestEntityRepository repository;
 
-    interface TestEntityRepository extends CrudRepository<TestEntity, TestEntityId> { }
+    interface TestEntityRepository extends CrudRepository<TestEntity, TestEntityId> {
+    }
 
     @Getter
     @Table("TEST_TABLE1")
@@ -72,7 +66,7 @@ public class MappingCompositeIDToPKTest {
         final Boolean isNew;
 
         @PersistenceConstructor
-        private  TestEntity(TestEntityId id, String name) {
+        private TestEntity(TestEntityId id, String name) {
             this(id, name, false); //for read from db
         }
 
@@ -98,6 +92,7 @@ public class MappingCompositeIDToPKTest {
     @ReadingConverter
     enum StringToTestEntityId implements Converter<String, TestEntityId> {
         INSTANCE;
+
         @Override
         public TestEntityId convert(String source) {
             String[] split = source.split("::");
@@ -106,18 +101,19 @@ public class MappingCompositeIDToPKTest {
     }
 
     @WritingConverter
-    enum TestEntityIdToString implements Converter<TestEntityId, String>{
+    enum TestEntityIdToString implements Converter<TestEntityId, String> {
         INSTANCE;
+
         @Override
         public String convert(TestEntityId source) {
-            return source.key1+"::"+source.getKey2();
+            return source.key1 + "::" + source.getKey2();
         }
     }
 
     @Test
     @DisplayName("Mapping Composite Identity to a PK")
     void map_to_pk() {
-        TestEntity entity = TestEntity.of(TestEntityId.of(1L,"Wansu"), "foo");
+        TestEntity entity = TestEntity.of(TestEntityId.of(1L, "Wansu"), "foo");
         repository.save(entity);
 
         assert entity.getId() != null;

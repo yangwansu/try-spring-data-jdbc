@@ -17,20 +17,17 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import static lombok.AccessLevel.PRIVATE;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringJUnitConfig
+@SpringJUnitConfig(classes = UsingVersionTest.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
-public class UsingVersionTest {
-
-    public static class Config extends AbstractBaseJdbcTestConfig {
-        @Override
-        protected String[] getSql() {
-            return new String[] {
+public class UsingVersionTest extends AbstractBaseJdbcTestConfig {
+    @Override
+    protected String[] getSql() {
+        return new String[] {
                 "CREATE TABLE IF NOT EXISTS TEST_TABLE (" +
                         "id bigint primary key, " +
                         "version bigint, " +
                         "name varchar(100))"
-            };
-        }
+        };
     }
 
     @Getter

@@ -8,7 +8,6 @@ import masil.example.springdata.jdbc.AbstractBaseJdbcTestConfig;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.PersistenceConstructor;
@@ -28,32 +27,30 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.annotation.DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD;
 
 @DirtiesContext(classMode = BEFORE_EACH_TEST_METHOD)
-@SpringJUnitConfig
-public class MappingObjectTypeTest {
+@SpringJUnitConfig(MappingObjectTypeTest.class)
+public class MappingObjectTypeTest extends AbstractBaseJdbcTestConfig {
 
-    @Configuration
-    public static class Config extends AbstractBaseJdbcTestConfig {
-
-        @Override
-        protected String[] getSql() {
-            return new String[]{
-                    "CREATE TABLE IF NOT EXISTS TEST_TABLE (id INTEGER IDENTITY PRIMARY KEY , name varchar(100), score INTEGER , createdAt bigint)"
-            };
-        }
-
-        @Override
-        protected List<Object> getConverters() {
-            return Arrays.asList(new IntegerToTestEntityIdConvertor(), new TestEntityIdToIntegerConvertor());
-        }
+    @Override
+    protected String[] getSql() {
+        return new String[]{
+                "CREATE TABLE IF NOT EXISTS TEST_TABLE (id INTEGER IDENTITY PRIMARY KEY , name varchar(100), score INTEGER , createdAt bigint)"
+        };
     }
+
+    @Override
+    protected List<Object> getConverters() {
+        return Arrays.asList(new IntegerToTestEntityIdConvertor(), new TestEntityIdToIntegerConvertor());
+    }
+
     @Autowired
     TestEntityRepository repository;
 
-    interface TestEntityRepository extends CrudRepository<TestEntity, TestEntityId> { }
+    interface TestEntityRepository extends CrudRepository<TestEntity, TestEntityId> {
+    }
 
     @Getter
     @Table("TEST_TABLE")
-    @AllArgsConstructor(access = PRIVATE, onConstructor_=@PersistenceConstructor)
+    @AllArgsConstructor(access = PRIVATE, onConstructor_ = @PersistenceConstructor)
     @RequiredArgsConstructor(staticName = "of")
     public static class TestEntity {
         @Id
@@ -66,6 +63,7 @@ public class MappingObjectTypeTest {
     public static class TestEntityId {
         OtherAggregationRef value;
     }
+
     @Value(staticConstructor = "of")
     public static class OtherAggregationRef {
         Integer id;
@@ -81,7 +79,7 @@ public class MappingObjectTypeTest {
     }
 
     @WritingConverter
-    public static class TestEntityIdToIntegerConvertor implements Converter<TestEntityId,Integer> {
+    public static class TestEntityIdToIntegerConvertor implements Converter<TestEntityId, Integer> {
 
         @Override
         public Integer convert(TestEntityId source) {

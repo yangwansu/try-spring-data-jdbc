@@ -24,38 +24,34 @@ import java.util.stream.IntStream;
 import static org.springframework.test.annotation.DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD;
 
 
-@SpringJUnitConfig
+@SpringJUnitConfig(classes = ConstructorOnlyPerformanceTest.class)
 @DisplayName("Constructor-only materialization is up to 30% faster than properties population.")
 @DirtiesContext(classMode = BEFORE_EACH_TEST_METHOD)
-public class ConstructorOnlyPerformanceTest {
+public class ConstructorOnlyPerformanceTest extends AbstractBaseJdbcTestConfig {
 
-    public static class Config extends AbstractBaseJdbcTestConfig {
+    public static final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS TEST_TABLE%d (id bigint identity primary key, name varchar(100))";
+    public static final int TABLE_COUNT = 2;
 
-        public static final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS TEST_TABLE%d (id bigint identity primary key, name varchar(100))";
-        public static final int TABLE_COUNT = 2;
-
-        @Override
-        protected String[] getSql() {
-            int count = 1000;
-            return makeSqlStrings(count);
-        }
-
-        private String[] makeSqlStrings(int count) {
-            String[] sql = new String[(count * TABLE_COUNT) + TABLE_COUNT];
-            sql[0] = String.format(CREATE_TABLE, 1);
-            sql[1] = String.format(CREATE_TABLE, 2);
-
-            IntStream.range(2, count+2).forEach(i -> {
-                sql[i] = String.format("INSERT INTO TEST_TABLE%d (name) VALUES('name')", 1);
-            });
-
-            IntStream.range(count+2, (count+2)+count).forEach(i -> {
-                sql[i] = String.format("INSERT INTO TEST_TABLE%d (name) VALUES('name')",  2);
-            });
-            return sql;
-        }
+    @Override
+    protected String[] getSql() {
+        int count = 1000;
+        return makeSqlStrings(count);
     }
 
+    private String[] makeSqlStrings(int count) {
+        String[] sql = new String[(count * TABLE_COUNT) + TABLE_COUNT];
+        sql[0] = String.format(CREATE_TABLE, 1);
+        sql[1] = String.format(CREATE_TABLE, 2);
+
+        IntStream.range(2, count+2).forEach(i -> {
+            sql[i] = String.format("INSERT INTO TEST_TABLE%d (name) VALUES('name')", 1);
+        });
+
+        IntStream.range(count+2, (count+2)+count).forEach(i -> {
+            sql[i] = String.format("INSERT INTO TEST_TABLE%d (name) VALUES('name')",  2);
+        });
+        return sql;
+    }
 
     @Getter
     @Table("TEST_TABLE1")

@@ -8,7 +8,6 @@ import masil.example.springdata.jdbc.AbstractBaseJdbcTestConfig;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.PersistenceConstructor;
@@ -30,24 +29,21 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.annotation.DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD;
 
 @DirtiesContext(classMode = BEFORE_EACH_TEST_METHOD)
-@SpringJUnitConfig
-public class MappingIDToPkTest {
+@SpringJUnitConfig(classes = MappingIDToPkTest.class)
+public class MappingIDToPkTest extends AbstractBaseJdbcTestConfig {
 
-    @Configuration
-    public static class Config extends AbstractBaseJdbcTestConfig {
-
-        @Override
-        protected String[] getSql() {
-            return new String[] {
-                    "CREATE TABLE IF NOT EXISTS TEST_TABLE (id BIGINT PRIMARY KEY, name varchar(100))"
-            };
-        }
-
-        @Override
-        protected List<Object> getConverters() {
-            return Arrays.asList(new LongToTestEntityIdConvertor(), new TestEntityIdToLongConvertor());
-        }
+    @Override
+    protected String[] getSql() {
+        return new String[] {
+                "CREATE TABLE IF NOT EXISTS TEST_TABLE (id BIGINT PRIMARY KEY, name varchar(100))"
+        };
     }
+
+    @Override
+    protected List<Object> getConverters() {
+        return Arrays.asList(new LongToTestEntityIdConvertor(), new TestEntityIdToLongConvertor());
+    }
+
     @Autowired
     TestEntityRepository repository;
 

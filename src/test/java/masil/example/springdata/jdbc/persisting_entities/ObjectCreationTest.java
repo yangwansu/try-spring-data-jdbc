@@ -21,17 +21,15 @@ import static org.springframework.test.annotation.DirtiesContext.ClassMode.BEFOR
 
 @DisplayName("Object Mapping")
 @DirtiesContext(classMode = BEFORE_EACH_TEST_METHOD)
-@SpringJUnitConfig
-public class ObjectCreationTest {
+@SpringJUnitConfig(classes = ObjectCreationTest.class)
+public class ObjectCreationTest extends AbstractBaseJdbcTestConfig {
 
-    public static class Config extends AbstractBaseJdbcTestConfig {
-        @Override
-        protected String[] getSql() {
-            return new String[]{
-                    "CREATE TABLE IF NOT EXISTS product (id INTEGER IDENTITY PRIMARY KEY , name varchar(100), price BIGINT, createdAt bigint)",
-                    "CREATE TABLE IF NOT EXISTS category (PRODUCT_ID INTEGER  , name varchar(100))"
-            };
-        }
+    @Override
+    protected String[] getSql() {
+        return new String[]{
+                "CREATE TABLE IF NOT EXISTS product (id INTEGER IDENTITY PRIMARY KEY , name varchar(100), price BIGINT, createdAt bigint)",
+                "CREATE TABLE IF NOT EXISTS category (PRODUCT_ID INTEGER  , name varchar(100))"
+        };
     }
 
     @Autowired

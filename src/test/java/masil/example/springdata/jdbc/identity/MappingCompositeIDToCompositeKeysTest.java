@@ -6,7 +6,6 @@ import lombok.Value;
 import masil.example.springdata.jdbc.AbstractBaseJdbcTestConfig;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.data.relational.core.mapping.Table;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.test.annotation.DirtiesContext;
@@ -14,18 +13,14 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import static org.springframework.test.annotation.DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD;
 
+@SpringJUnitConfig(classes = MappingCompositeIDToCompositeKeysTest.class)
 @DirtiesContext(classMode = BEFORE_EACH_TEST_METHOD)
-@SpringJUnitConfig
-public class MappingCompositeIDToCompositeKeysTest {
-
-    @Configuration
-    public static class Config extends AbstractBaseJdbcTestConfig {
-        @Override
-        protected String[] getSql() {
-            return new String[]{
-                    "CREATE TABLE IF NOT EXISTS TEST_TABLE (id BIGINT, name varchar(100), PRIMARY KEY(id, name))"
-            };
-        }
+public class MappingCompositeIDToCompositeKeysTest extends AbstractBaseJdbcTestConfig {
+    @Override
+    protected String[] getSql() {
+        return new String[]{
+                "CREATE TABLE IF NOT EXISTS TEST_TABLE (id BIGINT, name varchar(100), PRIMARY KEY(id, name))"
+        };
     }
 
     @Autowired

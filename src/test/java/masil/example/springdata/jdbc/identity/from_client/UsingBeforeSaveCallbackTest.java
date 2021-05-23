@@ -25,22 +25,19 @@ import static lombok.AccessLevel.PRIVATE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.annotation.DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD;
 
+@SpringJUnitConfig(classes = UsingBeforeSaveCallbackTest.class)
 @DirtiesContext(classMode = BEFORE_EACH_TEST_METHOD)
-@SpringJUnitConfig
-public class UsingBeforeSaveCallbackTest {
+public class UsingBeforeSaveCallbackTest extends AbstractBaseJdbcTestConfig {
+    @Override
+    protected String[] getSql() {
+        return new String[]{
+                "CREATE TABLE IF NOT EXISTS TEST_TABLE(id bigint primary key, name varchar(100))"
+        };
+    }
 
-    public static class Config extends AbstractBaseJdbcTestConfig {
-        @Override
-        protected String[] getSql() {
-            return new String[]{
-                    "CREATE TABLE IF NOT EXISTS TEST_TABLE(id bigint primary key, name varchar(100))"
-            };
-        }
-
-        @Bean
-        BeforeSaveCallback<TestEntity> idInjector() {
-            return new TestEntity.IdInjector();
-        }
+    @Bean
+    BeforeSaveCallback<TestEntity> idInjector() {
+        return new TestEntity.IdInjector();
     }
 
     @Getter

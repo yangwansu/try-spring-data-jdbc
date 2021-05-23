@@ -15,18 +15,15 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.springframework.test.annotation.DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD;
 
-@SpringJUnitConfig
+@SpringJUnitConfig(classes = UsingFragmentsInterfaceTest.class)
 @DirtiesContext(classMode = BEFORE_EACH_TEST_METHOD)
-public class UsingFragmentsInterfaceTest {
+public class UsingFragmentsInterfaceTest extends AbstractBaseJdbcTestConfig {
 
-
-    public static class Config extends AbstractBaseJdbcTestConfig {
-        @Override
-        protected String[] getSql() {
-            return new String[] {
+    @Override
+    protected String[] getSql() {
+        return new String[] {
                 "CREATE TABLE IF NOT EXISTS TEST_TABLE ( id bigint primary key , name varchar(100)) "
-            };
-        }
+        };
     }
 
     @Getter

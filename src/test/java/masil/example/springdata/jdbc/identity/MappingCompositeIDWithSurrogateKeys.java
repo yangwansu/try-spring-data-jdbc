@@ -4,7 +4,6 @@ import lombok.*;
 import masil.example.springdata.jdbc.AbstractBaseJdbcTestConfig;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.PersistenceConstructor;
 import org.springframework.data.relational.core.mapping.Embedded;
@@ -18,18 +17,13 @@ import java.util.Optional;
 import static org.springframework.test.annotation.DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD;
 
 @DirtiesContext(classMode = BEFORE_EACH_TEST_METHOD)
-@SpringJUnitConfig
-public class MappingCompositeIDWithSurrogateKeys {
-
-
-    @Configuration
-    public static class Config extends AbstractBaseJdbcTestConfig {
-        @Override
-        protected String[] getSql() {
-            return new String[] {
-                    "CREATE TABLE IF NOT EXISTS TEST_TABLE (id integer primary key identity, key1 bigint, key2  varchar(100), UNIQUE (key1, key2))"
-            };
-        }
+@SpringJUnitConfig(classes = MappingCompositeIDWithSurrogateKeys.class)
+public class MappingCompositeIDWithSurrogateKeys extends AbstractBaseJdbcTestConfig {
+    @Override
+    protected String[] getSql() {
+        return new String[] {
+                "CREATE TABLE IF NOT EXISTS TEST_TABLE (id integer primary key identity, key1 bigint, key2  varchar(100), UNIQUE (key1, key2))"
+        };
     }
 
     @Autowired

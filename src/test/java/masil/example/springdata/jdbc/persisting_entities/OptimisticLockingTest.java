@@ -21,16 +21,15 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.springframework.test.annotation.DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD;
 
 @DirtiesContext(classMode = BEFORE_EACH_TEST_METHOD)
-@SpringJUnitConfig
-public class OptimisticLockingTest {
-    public static class Config extends AbstractBaseJdbcTestConfig {
-        @Override
-        protected String[] getSql() {
-            return new String[]{
-                    "CREATE TABLE IF NOT EXISTS TEST_TABLE (id bigint primary key, version bigint)"
-            };
-        }
+@SpringJUnitConfig(classes = OptimisticLockingTest.class)
+public class OptimisticLockingTest extends AbstractBaseJdbcTestConfig {
+    @Override
+    protected String[] getSql() {
+        return new String[]{
+                "CREATE TABLE IF NOT EXISTS TEST_TABLE (id bigint primary key, version bigint)"
+        };
     }
+
     @Getter
     @Table("TEST_TABLE")
     @AllArgsConstructor(access = PRIVATE, onConstructor_ = @PersistenceConstructor)

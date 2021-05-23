@@ -24,17 +24,14 @@ import static org.springframework.test.annotation.DirtiesContext.ClassMode.BEFOR
 
 @DirtiesContext(classMode = BEFORE_EACH_TEST_METHOD)
 @Transactional
-@SpringJUnitConfig
-public class FooRepositoryTest {
-
-    public static class Config extends AbstractBaseJdbcTestConfig {
-        @Override
-        protected String[] getSql() {
-            return new String[]{
-                    "CREATE TABLE IF NOT EXISTS product (id INTEGER IDENTITY PRIMARY KEY , name varchar(100), price BIGINT, createdAt bigint)",
-                    "CREATE TABLE IF NOT EXISTS category (PRODUCT_ID INTEGER  , name varchar(100))"
-            };
-        }
+@SpringJUnitConfig(classes = FooRepositoryTest.class)
+public class FooRepositoryTest extends AbstractBaseJdbcTestConfig {
+    @Override
+    protected String[] getSql() {
+        return new String[]{
+                "CREATE TABLE IF NOT EXISTS product (id INTEGER IDENTITY PRIMARY KEY , name varchar(100), price BIGINT, createdAt bigint)",
+                "CREATE TABLE IF NOT EXISTS category (PRODUCT_ID INTEGER  , name varchar(100))"
+        };
     }
 
     interface MissingIdProductRepository extends CrudRepository<MissingIdProduct, Long> {
