@@ -2,7 +2,6 @@ package masil.example.springdata.jdbc.persisting_entities.embedded_entities;
 
 import lombok.*;
 import masil.example.springdata.jdbc.AbstractBaseJdbcTestConfig;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Id;
@@ -12,9 +11,6 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
-import java.util.Optional;
-
-import static masil.example.springdata.jdbc.persisting_entities.embedded_entities.OptionTest.Name.UNKNOWN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.annotation.DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD;
 
