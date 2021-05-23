@@ -1,7 +1,11 @@
 package masil.example.springdata.jdbc.persisting_entities.embedded_entities;
 
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Value;
 import masil.example.springdata.jdbc.AbstractBaseJdbcTestConfig;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Id;
@@ -24,10 +28,7 @@ public class OptionTest extends AbstractBaseJdbcTestConfig{
                 "CREATE TABLE IF NOT EXISTS FOO (" +
                         "id bigint identity primary key," +
                         "name varchar(50)," +
-                        "nick_name varchar(50)," +
-                        "address varchar(100)," +
-                        "phone varchar(100)," +
-                        "no integer" +
+                        "nick_name varchar(50)" +
                         ")"
         };
     }
@@ -36,24 +37,22 @@ public class OptionTest extends AbstractBaseJdbcTestConfig{
     @AllArgsConstructor(access = AccessLevel.PRIVATE, onConstructor_=@PersistenceConstructor)
     public static class Foo {
 
-        public static Foo of(Name name) {
-            return new Foo(null, name, null, null);
+        public static Foo withNulls() {
+            return new Foo(null, null, null);
         }
         public static Foo of(Name name, Name nickname) {
-            return new Foo(null, name, nickname, null);
+            return new Foo(null, name, nickname);
         }
 
         @Id
         private Long id;
 
-        @Embedded.Empty
+        @Embedded(onEmpty = Embedded.OnEmpty.USE_EMPTY)
         private final Name name;
 
-        @Embedded.Empty(prefix = "nick_")
+        @Embedded(onEmpty = Embedded.OnEmpty.USE_NULL, prefix = "nick_")
         private final Name nickname;
 
-        @Embedded.Nullable
-        private final AddressInfo addressInfo;
 
         public String getNameString() {
             return getName().getName();
@@ -64,33 +63,16 @@ public class OptionTest extends AbstractBaseJdbcTestConfig{
         }
     }
 
-    @Value
-    @ToString
+    @Value(staticConstructor = "of")
     public static class Name {
         public static final String UNKNOWN = "UNKNOWN";
         String name;
 
-        public Name() {
-            this.name = UNKNOWN;
-        }
-
-        @PersistenceConstructor
-        Name(String name) {
-            this.name = name;
-        }
-
-
-        public static Name of(String name) {
-            return new Name(name);
+        private Name(String name) {
+            this.name = name == null ? UNKNOWN : name;
         }
     }
 
-    @Value(staticConstructor = "of")
-    public static class AddressInfo {
-        String address;
-        String phone;
-        int no;
-    }
 
     interface Repository extends CrudRepository<Foo, Long> {}
 
@@ -98,21 +80,35 @@ public class OptionTest extends AbstractBaseJdbcTestConfig{
     Repository repository;
 
     @Test
-    void name() {
-        Foo foo = Foo.of(Name.of("Foo"));
+    @DisplayName("if a name column is null within result set, name field will be set to \"unknown\"")
+    void use_empty_option() {
+        Foo find = saveAndFind(Foo.withNulls());
 
+        assertThat(find.getNameString()).isEqualTo(Name.UNKNOWN);
+    }
+
+    @Test
+    @DisplayName("if a nick_name column is null within result set, nickName field will be set to null")
+    void use_null_option() {
+        Foo find = saveAndFind(Foo.withNulls());
+
+        assertThat(find.getNickname()).isNull();
+    }
+
+    @Test
+    @DisplayName("Embedded entities are used to have value objects in your java data model, even if there is only one table in your database.")
+    void basic() {
+        Foo find = saveAndFind(Foo.of(Name.of("Foo"), Name.of("Bar")));
+
+        assertThat(find.getNameString()).isEqualTo("Foo");
+        assertThat(find.getNickNameString()).isEqualTo("Bar");
+    }
+
+    private Foo saveAndFind(Foo foo) {
         repository.save(foo);
 
         Foo find = repository.findById(foo.getId()).orElse(null);
         assert find != null;
-
-        assertThat(find.getNameString()).isEqualTo("Foo");
-        assertThat(find.getNickNameString()).isNull(); // ??????
-        assertThat(find.getAddressInfo().getAddress()).isNull(); // ??????
-        assertThat(find.getAddressInfo().getPhone()).isNull(); // ??????
-        assertThat(find.getAddressInfo().getNo()).isEqualTo(0L); // ??????
-
-
-
+        return find;
     }
 }
