@@ -40,3 +40,7 @@ Entity 의 상태가 새로운 객체(New)인지 확인 하는 옵션들
 
 Aggregate Root 에 @Version Annotation을 사용한 Filed 를 사용해 낙관적 락을 제공한다. 
 - [OptimisticLockingTest](src/test/java/masil/example/springdata/jdbc/persisting_entities/OptimisticLockingTest.java)
+
+### [9.7.3. Named Queries](https://docs.spring.io/spring-data/jdbc/docs/current/reference/html/#jdbc.query-methods.named-query)
+
+- [Modifying Query](https://docs.spring.io/spring-data/jdbc/docs/current/reference/html/#jdbc.query-methods.at-query.modifying)
