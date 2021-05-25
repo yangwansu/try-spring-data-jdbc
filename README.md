@@ -23,6 +23,10 @@
   - [Construct-Only Performance](src/test/java/masil/example/springdata/jdbc/persisting_entities/ConstructorOnlyPerformanceTest.java)
 
 
+## [8.3.1. Fine-tuning Repository Definition](https://docs.spring.io/spring-data/jdbc/docs/current/reference/html/#repositories)
+
+  - [@RepositoryDefinition](src/test/java/masil/example/springdata/jdbc/ch8/_3_1/RepositoryDefinitionTest.java)
+      Spring Data 에서 제공해주는 CrudRepository 를 상속 받고 싶지 않을 때 메서드들을 재 생성 할 수 있다. delete 를 노출 시키고 싶지 않을 때 유용 할 수 있다.
 
 ## [9.6. Persisting Entities](https://docs.spring.io/spring-data/jdbc/docs/current/reference/html/#jdbc.entity-persistence)
 
