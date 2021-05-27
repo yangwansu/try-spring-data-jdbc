@@ -30,6 +30,16 @@
 
 ## [9.6. Persisting Entities](https://docs.spring.io/spring-data/jdbc/docs/current/reference/html/#jdbc.entity-persistence)
 
+## [9.6.1. Object Mapping Fundamentals](https://docs.spring.io/spring-data/jdbc/docs/current/reference/html/#mapping.fundamentals)
+
+**Object creation**
+
+Spring Data JDBC 는 객체를 구체화 하기 위해 Persistence Entity의  생성자를 감지하려 노력합니다.
+
+[Resolution Algorithm Test](src/test/java/masil/example/springdata/jdbc/ch9/_6_1/ObjectCreationTest.java)
+
+  
+
 ### [9.6.7. Embedded entities](https://docs.spring.io/spring-data/jdbc/docs/current/reference/html/#jdbc.entity-persistence.embedded-entities)
 Embedded Entity 는 테이블이 하나인 경우에도 Data Model에 Value Object를 포함 시키는데 유용하다.
 

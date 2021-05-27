@@ -1,4 +1,4 @@
-package masil.example.springdata.jdbc.persisting_entities.embedded_entities;
+package masil.example.springdata.jdbc.ch9.persisting_entities.embedded_entities;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
