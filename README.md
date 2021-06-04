@@ -1,10 +1,14 @@
 # Let's Try Test to Spring Data JDBC 
 
+## [8.3. Defining Repository Interfaces](https://docs.spring.io/spring-data/jdbc/docs/current/reference/html/#repositories.definition)
 
-## [8.3.1. Fine-tuning Repository Definition](https://docs.spring.io/spring-data/jdbc/docs/current/reference/html/#repositories)
+### [8.3.1. Fine-tuning Repository Definition](https://docs.spring.io/spring-data/jdbc/docs/current/reference/html/#repositories)
 
   - [@RepositoryDefinition](src/test/java/masil/example/springdata/jdbc/ch8_3_1/RepositoryDefinitionTest.java)
       Spring Data 에서 제공해주는 CrudRepository 를 상속 받고 싶지 않을 때 메서드들을 재 생성 할 수 있다. delete 를 노출 시키고 싶지 않을 때 유용 할 수 있다.
+
+## [8.7. Publishing Events from Aggregate Roots](https://docs.spring.io/spring-data/jdbc/docs/current/reference/html/#core.extensions)
+  
 
 ## [9.6. Persisting Entities](https://docs.spring.io/spring-data/jdbc/docs/current/reference/html/#jdbc.entity-persistence)
 
