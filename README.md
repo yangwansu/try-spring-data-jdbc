@@ -38,6 +38,10 @@ Aggregate Root 에 @Version Annotation을 사용한 Filed 를 사용해 낙관�
 
 - [Modifying Query](https://docs.spring.io/spring-data/jdbc/docs/current/reference/html/#jdbc.query-methods.at-query.modifying)
 
+## [9.12 Logging](https://docs.spring.io/spring-data/jdbc/docs/current/reference/html/#jdbc.logging)
+  Spring Data Jdbc 는 거의 로깅을 하지 않는다. 로깅을 원한다면 JdbcTemplate의 로그를 활성화하는 것을 고려 할 수 있다.
+  - [log4j.properties](src/main/resources/log4j.properties)
+
 ## [9.14. Auditing](https://docs.spring.io/spring-data/jdbc/docs/current/reference/html/#auditing)
 
 ### [9.14.1. Basics](https://docs.spring.io/spring-data/jdbc/docs/current/reference/html/#auditing.basics)
