@@ -32,6 +32,7 @@ Embedded Entity 는 테이블이 하나인 경우에도 Data Model에 Value Obje
 
 Entity 의 상태가 새로운 객체(New)인지 확인 하는 옵션들  
  - [@Version - properties inspection Test](src/test/java/masil/example/springdata/jdbc/ch9_6_8/VersionPropertiesInspectionTest.java)
+ - [The Version is always updated on save](src/test/java/masil/example/springdata/jdbc/ch9_6_8/VersionUpdateTest.java)
 
 ### [9.6.10. Optimistic Locking](https://docs.spring.io/spring-data/jdbc/docs/current/reference/html/#jdbc.entity-persistence.optimistic-locking)
 
