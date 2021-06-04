@@ -22,7 +22,7 @@ repositories {
 
 
 dependencies {
-  implementation 'org.springframework.data:spring-data-jdbc:2.2.0'
+  implementation 'org.springframework.data:spring-data-jdbc:2.2.1'
   runtimeOnly 'org.hsqldb:hsqldb:2.5.2'
   implementation 'org.slf4j:slf4j-log4j12:1.7.26'
 
