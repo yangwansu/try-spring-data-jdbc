@@ -38,7 +38,15 @@ Aggregate Root 에 @Version Annotation을 사용한 Filed 를 사용해 낙관�
 
 - [Modifying Query](https://docs.spring.io/spring-data/jdbc/docs/current/reference/html/#jdbc.query-methods.at-query.modifying)
 
+## [9.14. Auditing](https://docs.spring.io/spring-data/jdbc/docs/current/reference/html/#auditing)
 
+### [9.14.1. Basics](https://docs.spring.io/spring-data/jdbc/docs/current/reference/html/#auditing.basics)
+
+ - [Annotation-based Auditing Metadata Test](src/test/java/masil/example/springdata/jdbc/ch9_14_1/AnnotationBasedAuditingMetadataTest.java)
+
+  - Stackoverflow
+    - [In Spring Data JDBC bypass @CreatedDate and @LastModifiedDate](https://stackoverflow.com/questions/67775557/in-spring-data-jdbc-bypass-createddate-and-lastmodifieddate)
+      - [Test to Set a field Manually](src/test/java/masil/example/springdata/jdbc/ch9_14_1/ManuallySetupTest.java)
 
 
 ## Identity
