@@ -2,7 +2,7 @@ package masil.example.springdata.jdbc.ch9_6_1;
 
 import lombok.Getter;
 import lombok.Setter;
-import masil.example.springdata.jdbc.AbstractBaseJdbcTestConfig;
+import masil.example.springdata.jdbc.DataJdbcTestSupport;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ import static org.springframework.test.annotation.DirtiesContext.ClassMode.BEFOR
 @DirtiesContext(classMode = BEFORE_EACH_TEST_METHOD)
 @Transactional
 @SpringJUnitConfig(classes = FooRepositoryTest.class)
-public class FooRepositoryTest extends AbstractBaseJdbcTestConfig {
+public class FooRepositoryTest extends DataJdbcTestSupport {
     @Override
     protected String[] getSql() {
         return new String[]{

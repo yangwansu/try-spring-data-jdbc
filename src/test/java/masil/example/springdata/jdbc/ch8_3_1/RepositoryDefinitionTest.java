@@ -3,7 +3,7 @@ package masil.example.springdata.jdbc.ch8_3_1;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import masil.example.springdata.jdbc.AbstractBaseJdbcTestConfig;
+import masil.example.springdata.jdbc.DataJdbcTestSupport;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Id;
@@ -19,7 +19,7 @@ import static org.springframework.test.annotation.DirtiesContext.ClassMode.BEFOR
 
 @SpringJUnitConfig(classes = RepositoryDefinitionTest.class)
 @DirtiesContext(classMode = BEFORE_EACH_TEST_METHOD)
-public class RepositoryDefinitionTest extends AbstractBaseJdbcTestConfig {
+public class RepositoryDefinitionTest extends DataJdbcTestSupport {
 
     @Override
     protected String[] getSql() {

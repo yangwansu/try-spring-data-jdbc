@@ -2,7 +2,7 @@ package masil.example.springdata.jdbc.ch9_6_10;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import masil.example.springdata.jdbc.AbstractBaseJdbcTestConfig;
+import masil.example.springdata.jdbc.DataJdbcTestSupport;
 import org.assertj.core.api.AbstractLongAssert;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ import static org.springframework.test.annotation.DirtiesContext.ClassMode.BEFOR
 
 @DirtiesContext(classMode = BEFORE_EACH_TEST_METHOD)
 @SpringJUnitConfig(classes = OptimisticLockingTest.class)
-public class OptimisticLockingTest extends AbstractBaseJdbcTestConfig {
+public class OptimisticLockingTest extends DataJdbcTestSupport {
     @Override
     protected String[] getSql() {
         return new String[]{

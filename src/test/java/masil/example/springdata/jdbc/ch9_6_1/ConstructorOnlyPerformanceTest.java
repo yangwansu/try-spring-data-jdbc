@@ -2,7 +2,7 @@ package masil.example.springdata.jdbc.ch9_6_1;
 
 import lombok.Getter;
 import lombok.Setter;
-import masil.example.springdata.jdbc.AbstractBaseJdbcTestConfig;
+import masil.example.springdata.jdbc.DataJdbcTestSupport;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.junit.jupiter.api.AfterAll;
@@ -27,7 +27,7 @@ import static org.springframework.test.annotation.DirtiesContext.ClassMode.BEFOR
 @SpringJUnitConfig(classes = ConstructorOnlyPerformanceTest.class)
 @DisplayName("Constructor-only materialization is up to 30% faster than properties population.")
 @DirtiesContext(classMode = BEFORE_EACH_TEST_METHOD)
-public class ConstructorOnlyPerformanceTest extends AbstractBaseJdbcTestConfig {
+public class ConstructorOnlyPerformanceTest extends DataJdbcTestSupport {
 
     public static final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS TEST_TABLE%d (id bigint identity primary key, name varchar(100))";
     public static final int TABLE_COUNT = 2;

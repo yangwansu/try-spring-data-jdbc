@@ -27,7 +27,7 @@ import java.util.List;
 
 @Configuration
 @EnableJdbcRepositories(considerNestedRepositories = true)
-public abstract class AbstractBaseJdbcTestConfig extends AbstractJdbcConfiguration {
+public abstract class DataJdbcTestSupport extends AbstractJdbcConfiguration {
 
     protected String[] getSql() {
         return new String[]{};

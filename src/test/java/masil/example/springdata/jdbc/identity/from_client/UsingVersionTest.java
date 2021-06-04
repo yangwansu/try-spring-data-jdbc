@@ -2,7 +2,7 @@ package masil.example.springdata.jdbc.identity.from_client;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import masil.example.springdata.jdbc.AbstractBaseJdbcTestConfig;
+import masil.example.springdata.jdbc.DataJdbcTestSupport;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringJUnitConfig(classes = UsingVersionTest.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
-public class UsingVersionTest extends AbstractBaseJdbcTestConfig {
+public class UsingVersionTest extends DataJdbcTestSupport {
     @Override
     protected String[] getSql() {
         return new String[] {

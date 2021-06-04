@@ -1,7 +1,7 @@
 package masil.example.springdata.jdbc.identity;
 
 import lombok.*;
-import masil.example.springdata.jdbc.AbstractBaseJdbcTestConfig;
+import masil.example.springdata.jdbc.DataJdbcTestSupport;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Id;
@@ -18,7 +18,7 @@ import static org.springframework.test.annotation.DirtiesContext.ClassMode.BEFOR
 
 @DirtiesContext(classMode = BEFORE_EACH_TEST_METHOD)
 @SpringJUnitConfig(classes = MappingCompositeIDWithSurrogateKeys.class)
-public class MappingCompositeIDWithSurrogateKeys extends AbstractBaseJdbcTestConfig {
+public class MappingCompositeIDWithSurrogateKeys extends DataJdbcTestSupport {
     @Override
     protected String[] getSql() {
         return new String[] {

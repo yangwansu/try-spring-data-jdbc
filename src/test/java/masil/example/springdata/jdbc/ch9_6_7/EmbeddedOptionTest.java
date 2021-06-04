@@ -4,7 +4,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Value;
-import masil.example.springdata.jdbc.AbstractBaseJdbcTestConfig;
+import masil.example.springdata.jdbc.DataJdbcTestSupport;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ import static org.springframework.test.annotation.DirtiesContext.ClassMode.BEFOR
 
 @SpringJUnitConfig(classes = EmbeddedOptionTest.class)
 @DirtiesContext(classMode = BEFORE_EACH_TEST_METHOD)
-public class EmbeddedOptionTest extends AbstractBaseJdbcTestConfig{
+public class EmbeddedOptionTest extends DataJdbcTestSupport {
 
     @Override
     protected String[] getSql() {

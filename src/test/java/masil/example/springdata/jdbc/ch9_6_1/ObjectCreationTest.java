@@ -3,7 +3,7 @@ package masil.example.springdata.jdbc.ch9_6_1;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import masil.example.springdata.jdbc.AbstractBaseJdbcTestConfig;
+import masil.example.springdata.jdbc.DataJdbcTestSupport;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ import static org.springframework.test.annotation.DirtiesContext.ClassMode.BEFOR
 @DisplayName("Object Mapping")
 @DirtiesContext(classMode = BEFORE_EACH_TEST_METHOD)
 @SpringJUnitConfig(classes = ObjectCreationTest.class)
-public class ObjectCreationTest extends AbstractBaseJdbcTestConfig {
+public class ObjectCreationTest extends DataJdbcTestSupport {
 
     @Override
     protected String[] getSql() {

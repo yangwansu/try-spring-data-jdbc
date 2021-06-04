@@ -3,7 +3,7 @@ package masil.example.springdata.jdbc.identity.from_client;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import masil.example.springdata.jdbc.AbstractBaseJdbcTestConfig;
+import masil.example.springdata.jdbc.DataJdbcTestSupport;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ import static org.springframework.test.annotation.DirtiesContext.ClassMode.BEFOR
 
 @SpringJUnitConfig(classes = UsingBeforeSaveEventTest.class)
 @DirtiesContext(classMode = BEFORE_EACH_TEST_METHOD)
-public class UsingBeforeSaveEventTest extends AbstractBaseJdbcTestConfig {
+public class UsingBeforeSaveEventTest extends DataJdbcTestSupport {
 
     AtomicLong atomicLong = new AtomicLong(0L);
 

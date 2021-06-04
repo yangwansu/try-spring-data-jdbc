@@ -2,7 +2,7 @@ package masil.example.springdata.jdbc.identity.from_client;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import masil.example.springdata.jdbc.AbstractBaseJdbcTestConfig;
+import masil.example.springdata.jdbc.DataJdbcTestSupport;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Id;
@@ -17,7 +17,7 @@ import static org.springframework.test.annotation.DirtiesContext.ClassMode.BEFOR
 
 @SpringJUnitConfig(classes = UsingFragmentsInterfaceTest.class)
 @DirtiesContext(classMode = BEFORE_EACH_TEST_METHOD)
-public class UsingFragmentsInterfaceTest extends AbstractBaseJdbcTestConfig {
+public class UsingFragmentsInterfaceTest extends DataJdbcTestSupport {
 
     @Override
     protected String[] getSql() {

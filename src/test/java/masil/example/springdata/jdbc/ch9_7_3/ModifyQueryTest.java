@@ -2,7 +2,7 @@ package masil.example.springdata.jdbc.ch9_7_3;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import masil.example.springdata.jdbc.AbstractBaseJdbcTestConfig;
+import masil.example.springdata.jdbc.DataJdbcTestSupport;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Id;
@@ -20,7 +20,7 @@ import static org.springframework.test.annotation.DirtiesContext.ClassMode.BEFOR
 
 @SpringJUnitConfig(classes = ModifyQueryTest.class)
 @DirtiesContext(classMode = BEFORE_EACH_TEST_METHOD)
-public class ModifyQueryTest extends AbstractBaseJdbcTestConfig {
+public class ModifyQueryTest extends DataJdbcTestSupport {
 
     public static final Integer INVALID_ID = 100;
 
