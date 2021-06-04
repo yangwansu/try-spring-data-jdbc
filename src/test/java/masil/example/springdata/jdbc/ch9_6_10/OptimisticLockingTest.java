@@ -1,4 +1,4 @@
-package masil.example.springdata.jdbc.ch9.persisting_entities;
+package masil.example.springdata.jdbc.ch9_6_10;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

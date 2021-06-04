@@ -1,4 +1,4 @@
-package masil.example.springdata.jdbc.ch8._3_1;
+package masil.example.springdata.jdbc.ch8_3_1;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

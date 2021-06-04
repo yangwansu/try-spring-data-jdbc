@@ -1,4 +1,4 @@
-package masil.example.springdata.jdbc.ch9.persisting_entities.embedded_entities;
+package masil.example.springdata.jdbc.ch9_6_7;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -18,9 +18,9 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.annotation.DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD;
 
-@SpringJUnitConfig(classes = OptionTest.class)
+@SpringJUnitConfig(classes = EmbeddedOptionTest.class)
 @DirtiesContext(classMode = BEFORE_EACH_TEST_METHOD)
-public class OptionTest extends AbstractBaseJdbcTestConfig{
+public class EmbeddedOptionTest extends AbstractBaseJdbcTestConfig{
 
     @Override
     protected String[] getSql() {

@@ -1,4 +1,4 @@
-package masil.example.springdata.jdbc.query_methods.named_queries;
+package masil.example.springdata.jdbc.ch9_7_3;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -51,7 +51,11 @@ public class ModifyQueryTest extends AbstractBaseJdbcTestConfig {
 
         @Modifying
         @Query("UPDATE FOO SET VALUE = :value WHERE ID = :id")
-        int updateValue(@Param("id") Integer id,@Param("value") Integer value);
+        int updateValueAndReturnInteger(@Param("id") Integer id, @Param("value") Integer value);
+
+        @Modifying
+        @Query("UPDATE FOO SET VALUE = :value WHERE ID = :id")
+        int updateValueAndReturnBoolean(@Param("id") Integer id,@Param("value") Integer value);
     }
 
     @Autowired
@@ -63,10 +67,10 @@ public class ModifyQueryTest extends AbstractBaseJdbcTestConfig {
         Foo foo = Foo.of(0);
         Foo saved = repository.save(foo);
 
-        int updatedCount = repository.updateValue(saved.getId(), 100);
+        int updatedCount = repository.updateValueAndReturnInteger(saved.getId(), 100);
         assertThat(updatedCount).isEqualTo(1);
 
-        updatedCount = repository.updateValue(INVALID_ID, 100);
+        updatedCount = repository.updateValueAndReturnInteger(INVALID_ID, 100);
         assertThat(updatedCount).isEqualTo(0);
     }
 }
