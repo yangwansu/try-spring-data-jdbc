@@ -1,8 +1,9 @@
-package masil.example.springdata.jdbc;
+package masil.example.springdata.jdbc.ch9_6_2;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import masil.example.springdata.jdbc.DataJdbcTestSupport;
 import org.assertj.core.util.Sets;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -21,9 +22,9 @@ import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringJUnitConfig(classes = AggregateReferenceTest.class)
+@SpringJUnitConfig(classes = ManyToManyTest.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
-public class AggregateReferenceTest extends DataJdbcTestSupport{
+public class ManyToManyTest extends DataJdbcTestSupport {
 
 
     @Override
